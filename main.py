@@ -13,9 +13,6 @@
 ###############################################
 
 import sys
-import data.prototypes.controller as controller
-import data.prototypes.game_data_parser as gdparser
-import data.prototypes.test_processor as tprocessor
 import data.ui.init as windowManager
 
 def main() -> None:
@@ -31,7 +28,7 @@ def main() -> None:
 
     else:
         ## Test mode
-        tprocessor.init(sys.argv[1])
+        ...
 
 if __name__ == "__main__":
     main()
