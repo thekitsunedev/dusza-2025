@@ -1,8 +1,8 @@
 from enum import Enum
 
-class ElementAdvantage(Enum):
+class Element(Enum):
     """
-    Stores the element, and its opposite to which it has an advantage against.
+    Stores the element, and its opposite to which it deals the double damage.
     """
 
     FIRE = "AIR"
@@ -31,7 +31,7 @@ class DungeonReward(Enum):
     CARD = None
 
 
-class DungeonTypes(Enum):
+class DungeonType(Enum):
     """
     Marks the type of the dungeon.
     """

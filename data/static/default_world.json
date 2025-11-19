@@ -1,0 +1,90 @@
+{
+    "cards": {
+        "Arin": {
+            "strength": 2,
+            "health": 5,
+            "element": "EARTH"
+        },
+        "Liora": {
+            "strength": 2,
+            "health": 4,
+            "element": "AIR"
+        },
+        "Nerun": {
+            "strength": 3,
+            "health": 3,
+            "element": "FIRE"
+        },
+        "Selia": {
+            "strength": 2,
+            "health": 6,
+            "element": "WATER"
+        },
+        "Torak": {
+            "strength": 3,
+            "health": 4,
+            "element": "EARTH"
+        },
+        "Emera": {
+            "strength": 2,
+            "health": 5,
+            "element": "AIR"
+        },
+        "Vorn": {
+            "strength": 2,
+            "health": 7,
+            "element": "WATER"
+        },
+        "Kael": {
+            "strength": 3,
+            "health": 5,
+            "element": "FIRE"
+        },
+        "Myra": {
+            "strength": 2,
+            "health": 6,
+            "element": "EARTH"
+        },
+        "Thalen": {
+            "strength": 3,
+            "health": 5,
+            "element": "AIR"
+        },
+        "Isara": {
+            "strength": 2,
+            "health": 6,
+            "element": "WATER"
+        }
+    },
+    "leaders": {
+        "Lord Torak": {
+            "inherit": "Torak",
+            "buff": "STRENGTH"
+        },
+        "Priestess Selia": {
+            "inherit": "Selia",
+            "buff": "HEALTH"
+        }
+    },
+    "dungeons": {
+        "Barlangi Portya": {
+            "type": "SIMPLE",
+            "reward": "STRENGTH",
+            "cards": ["Nerun"],
+            "leader": ""
+        },
+        "Osi Szenthely": {
+            "type": "SMALL",
+            "reward": "HEALTH",
+            "cards": ["Arin", "Emera", "Selia"],
+            "leader": "Lord Torak"
+        },
+        "A melyseg kiralynoje": {
+            "type": "BIG",
+            "reward": "CARD",
+            "cards": ["Liora", "Arin", "Selia", "Nerun", "Torak"],
+            "leader": "Priestess Selia"
+        }
+    },
+    "collection": ["Arin", "Liora", "Selia", "Nerun", "Torak", "Emera", "Kael", "Myra", "Thalen", "Isara"]
+}
