@@ -8,10 +8,10 @@ from data.static.world import World
 
 DATA_PATH: Path = Path(__file__).resolve().parent.parent
 
-def save(world: World, save_name: str = "default") -> None:
+def save(world: World, save_name: str = "default_world") -> None:
     """
     Save world data to saves/<world_name>.json
-    world_name defaults to default
+    world_name defaults to default_world
     """
     SAVE_PATH: Path = DATA_PATH.joinpath(f"saves/{save_name}.json")
     save_data: dict = {}
