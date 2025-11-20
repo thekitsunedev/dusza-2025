@@ -4,6 +4,7 @@ from data.static.dungeon import Dungeon
 
 @dataclass
 class World:
+    name: str
     cards: list[CardObject]
     leaders: list[LeaderObject]
     dungeons: list[Dungeon]

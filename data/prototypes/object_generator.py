@@ -17,7 +17,8 @@ def createLeader(name: str, inherit_from: CardObject,
     health = inherit_from.health * (2 if buff == InheritedBuff.HEALTH else 1)
     damage = inherit_from.damage * (2 if buff == InheritedBuff.DAMAGE else 1)
     element = inherit_from.element
-    return LeaderObject(name, health, damage, element, buff)
+    inherited_from_name = inherit_from.name
+    return LeaderObject(name, health, damage, element, buff, inherited_from_name)
 
 
 def createDungeon(name: str,

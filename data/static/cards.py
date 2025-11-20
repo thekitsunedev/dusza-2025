@@ -11,3 +11,4 @@ class CardObject:
 @dataclass
 class LeaderObject(CardObject):
     buff: InheritedBuff
+    inherited_from: str
