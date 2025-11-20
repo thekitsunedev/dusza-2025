@@ -67,7 +67,7 @@ def load(save_name: str) -> World:
     return world
 
 def delete(save_name: str) -> None:
-    SAVE_PATH = DATA_PATH.joinpath("saves/{save_name}.json")
+    SAVE_PATH = DATA_PATH.joinpath(f"saves/{save_name}.json")
     try:
         os.remove(SAVE_PATH)
     except:
