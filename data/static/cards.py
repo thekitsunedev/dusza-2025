@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from data.static.definitions import ElementAdvantage, InheritedBuff
+from data.static.definitions import Element, InheritedBuff
 
 @dataclass
 class CardObject:
     name: str
     health: int
     damage: int
-    element: ElementAdvantage
+    element: Element
 
 @dataclass
 class LeaderObject(CardObject):

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from data.static.global_definitions import DungeonType, DungeonReward
+from data.static.definitions import DungeonType, DungeonReward
 from data.static.cards import *
 
 @dataclass

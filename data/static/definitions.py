@@ -17,8 +17,8 @@ class InheritedBuff(Enum):
     Marks the type of buff a leader card inherits from a generic card.
     """
 
-    HEALTH = None
-    DAMAGE = None
+    HEALTH = "leader.buff.health"
+    DAMAGE = "leader.buff.damage"
 
 
 class DungeonReward(Enum):
@@ -26,9 +26,9 @@ class DungeonReward(Enum):
     Marks the type of reward given to the card defeating the last opponent.
     """
 
-    HEALTH = None
-    DAMAGE = None
-    CARD = None
+    HEALTH = "dungeon.reward.health"
+    DAMAGE = "dungeon.reward.damage"
+    CARD = "dungeon.reward.card"
 
 
 class DungeonType(Enum):
@@ -36,6 +36,6 @@ class DungeonType(Enum):
     Marks the type of the dungeon.
     """
 
-    SIMPLE = None
-    SMALL = None
-    BIG = None
+    SIMPLE = "dungeon.type.simple"
+    SMALL = "dungeon.type.small"
+    BIG = "dungeon.type.big"
