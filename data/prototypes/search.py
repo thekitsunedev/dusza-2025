@@ -26,3 +26,12 @@ def findCardFromCollection(collection: list[CardObject], name: str) -> CardObjec
         if card.name == name:
             return card
     return None
+
+def findNotOwned(cards: list[CardObject], collection: list[CardObject]) -> CardObject | None:
+    found: CardObject | None = None
+    for card in cards:
+        if any([card.name == owned.name for owned in collection]):
+            continue
+        found = card
+        break
+    return found

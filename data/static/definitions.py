@@ -2,7 +2,7 @@ from enum import Enum, auto
 
 class Element(Enum):
     """
-    Stores the element, and its opposite to which it deals the double damage.
+    Stores the element, and its opposite to which it deals the half damage.
     """
 
     FIRE = "AIR"
@@ -11,7 +11,6 @@ class Element(Enum):
     EARTH = "WATER"
 
 
-### Replace <None> with string of locale name if locales get implemented.
 class InheritedBuff(Enum):
     """
     Marks the type of buff a leader card inherits from a generic card.
