@@ -1,0 +1,25 @@
+uj kartya;Feny;9;9;levego
+uj kartya;Arny;10;10;fold
+uj kartya;Lang;12;7;tuz
+uj kartya;Vizgyuru;8;12;viz
+
+uj vezer;Arnylord;Arny;eletero
+
+uj kazamata;egyszeru;Teszt4a Kazamata;Feny,Lang;sebzes
+uj kazamata;kis;Teszt4b Kazamata;Vizgyuru,Feny,Arny;Arnylord;sebzes
+
+uj jatekos
+
+felvetel gyujtemenybe;Feny
+felvetel gyujtemenybe;Lang
+felvetel gyujtemenybe;Vizgyuru
+
+uj pakli;Feny,Vizgyuru
+
+export vilag;out.vilag04.txt
+export jatekos;out.jatekos04.txt
+
+harc;Teszt4b Kazamata;out.harc04.txt
+
+export vilag;out.vilag05.txt
+export jatekos;out.jatekos05.txt

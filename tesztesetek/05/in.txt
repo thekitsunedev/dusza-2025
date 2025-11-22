@@ -1,0 +1,21 @@
+uj kartya;Tigris;9;11;tuz
+uj kartya;Panda;6;14;fold
+uj kartya;Kobra;10;7;viz
+uj kartya;Sas;8;10;levego
+
+uj vezer;Tuz Tigris;Tigris;sebzes
+
+uj kazamata;kis;Teszt2 Kazamata;Panda,Kobra,Sas;Tuz Tigris;eletero
+
+uj jatekos
+
+felvetel gyujtemenybe;Tigris
+felvetel gyujtemenybe;Panda
+felvetel gyujtemenybe;Kobra
+
+uj pakli;Tigris,Panda
+
+export vilag;out.vilag02.txt
+export jatekos;out.jatekos02.txt
+
+harc;Teszt2 Kazamata;out.harc02.txt

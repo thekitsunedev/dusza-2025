@@ -1,0 +1,24 @@
+uj kartya;Orkan;7;13;levego
+uj kartya;Hullam;11;9;viz
+uj kartya;Mag;5;15;fold
+uj kartya;Lobbanas;14;6;tuz
+uj kartya;Villam;12;8;tuz
+
+uj vezer;Villam Kiraly;Villam;sebzes
+
+uj kazamata;nagy;Teszt3 Kazamata;Orkan,Hullam,Mag,Lobbanas,Villam;Villam Kiraly
+
+uj jatekos
+
+felvetel gyujtemenybe;Orkan
+felvetel gyujtemenybe;Hullam
+felvetel gyujtemenybe;Mag
+felvetel gyujtemenybe;Lobbanas
+felvetel gyujtemenybe;Villam
+
+uj pakli;Orkan,Hullam,Lobbanas
+
+export vilag;out.vilag03.txt
+export jatekos;out.jatekos03.txt
+
+harc;Teszt3 Kazamata;out.harc03.txt
