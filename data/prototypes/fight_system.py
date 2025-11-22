@@ -39,8 +39,6 @@ class FightSystem:
                 case DungeonReward.HEALTH:
                     card_name = self.deck[self.card_index].name
                     card = findByName(self.world.collection, card_name)
-                    if card is None:
-                        raise Exception("Card not found")
                     card.health = min(card.health + 2, 100)
                     result += f";eletero;{card_name}"
 
@@ -48,8 +46,6 @@ class FightSystem:
                 case DungeonReward.DAMAGE:
                     card_name = self.deck[self.card_index].name
                     card = findByName(self.world.collection, card_name)
-                    if card is None:
-                        raise Exception("Card not found")
                     card.damage = min(card.damage + 1, 100)
                     result += f";sebzes;{card_name}"
 
@@ -109,7 +105,7 @@ class FightSystem:
         self.__round_phase_old = self.round_phase
         self.round_phase = (self.round_phase + 1) % 2
         result = f"{self.round}.kor{result}"
-        if self.round_phase == 1 and self.__round_phase_old == 0:
+        if self.round_phase == 0 and self.__round_phase_old == 1:
             self.round += 1
         return result
 

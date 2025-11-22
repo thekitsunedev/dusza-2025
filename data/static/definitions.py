@@ -25,9 +25,9 @@ class DungeonReward(Enum):
     Marks the type of reward given to the card defeating the last opponent.
     """
 
-    HEALTH = auto()
-    DAMAGE = auto()
-    CARD = auto()
+    HEALTH = ";eletero"
+    DAMAGE = ";sebzes"
+    CARD = ""
 
 
 class DungeonType(Enum):
@@ -35,6 +35,6 @@ class DungeonType(Enum):
     Marks the type of the dungeon.
     """
 
-    SIMPLE = auto()
-    SMALL = auto()
-    BIG = auto()
+    SIMPLE = "egyszeru"
+    SMALL = "kis"
+    BIG = "nagy"

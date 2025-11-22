@@ -3,12 +3,12 @@ from data.static.cards import *
 from data.static.dungeon import Dungeon
 
 
-def createCard(name: str, health: int,
-               damage: int, element: Element) -> CardObject:
+def createCard(name: str, damage: int,
+               health: int, element: Element) -> CardObject:
     name = name[:16]
     health = min(max(health, 0), 100)
     damage = min(max(damage, 2), 100)
-    return CardObject(name, health, damage, element)
+    return CardObject(name, damage, health, element)
 
 
 def createLeader(name: str, inherit_from: CardObject,
@@ -18,7 +18,7 @@ def createLeader(name: str, inherit_from: CardObject,
     damage = inherit_from.damage * (2 if buff == InheritedBuff.DAMAGE else 1)
     element = inherit_from.element
     inherited_from_name = inherit_from.name
-    return LeaderObject(name, health, damage, element, buff, inherited_from_name)
+    return LeaderObject(name, damage, health, element, buff, inherited_from_name)
 
 
 def createDungeon(name: str,

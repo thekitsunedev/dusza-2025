@@ -4,10 +4,11 @@ import data.prototypes.parser.save as save
 from data.prototypes.search import findByName
 from data.prototypes.parser.world import loadWorld
 from data.static.cards import CardObject
+from data.static.world import World
 
 
 class Controller:
-    def __init__(self, name: str = "default_world", load: bool = False):
+    def __init__(self, name: str = "default_world", load: bool = False, test_mode: bool = False):
         """
         name: str > default_world
             name of the world to load | create
@@ -15,14 +16,18 @@ class Controller:
             ?False: create a new world
             ?True: load a save
         """
-        if load:
-            self.world = save.load(name)
+        if not test_mode:
+            if load:
+                self.world = save.load(name)
+            else:
+                self.world = loadWorld(name)
+
         else:
-            self.world = loadWorld(name)
+            self.world = World("", [], [], [], [], 0) # Initialize an empty WorldClass
     
+        self.fight_system = FightSystem(self.world)
         self.deck: list[CardObject] = []
 
-        self.fight_system = FightSystem(self.world)
     
     def createDeck(self, cards: list[str]) -> list[CardObject]:
         """

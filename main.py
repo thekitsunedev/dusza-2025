@@ -14,6 +14,7 @@
 
 import sys
 import data.uiprototype.init as windowManager
+from data.prototypes.test_processor import start
 
 def main() -> None:
     if len(sys.argv) == 1:
@@ -28,7 +29,7 @@ def main() -> None:
 
     else:
         ## Test mode
-        ...
+        start(sys.argv[1])
 
 if __name__ == "__main__":
     main()

@@ -4,8 +4,8 @@ from data.static.definitions import Element, InheritedBuff
 @dataclass
 class CardObject:
     name: str
-    health: int
     damage: int
+    health: int
     element: Element
 
 @dataclass
