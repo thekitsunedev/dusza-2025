@@ -13,7 +13,7 @@
 ###############################################
 
 import sys
-import data.ui.init as windowManager
+import data.uiprototype.init as windowManager
 
 def main() -> None:
     if len(sys.argv) == 1:
@@ -22,7 +22,7 @@ def main() -> None:
     
     if sys.argv[1] == "--ui":
         ## GUI Stuff
-        gdparser.parse()
+        #gdparser.parse() 
         windowManager.init()
         # Don't touch dis, go to data/ui/
 
