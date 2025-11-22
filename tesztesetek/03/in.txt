@@ -1,0 +1,36 @@
+uj kartya;Maro;5;7;fold
+uj kartya;Taro;10;12;tuz
+uj kartya;Karo;5;1;viz
+uj kartya;Fako;6;12;levego
+uj kartya;Gekko;11;10;tuz
+uj kartya;Mekko;6;7;viz
+uj kartya;Lotto;13;5;viz
+uj kartya;Netto;10;10;fold
+
+uj vezer;Nagyon Maro;Maro;sebzes
+
+uj kazamata;egyszeru;Teszt6c Kazamata;Maro,Taro,Karo;sebzes
+uj kazamata;egyszeru;Teszt6d Kazamata;Gekko;eletero
+uj kazamata;kis;Teszt7 Kazamata;Lotto,Fako,Mekko;eletero
+uj kazamata;kis;Teszt8 Kazamata;Karo;Taro;sebzes
+uj kazamata;nagy;Teszt9 Kazamata;Maro,Taro,Fako,Gekko,Mekko;Nagyon Maro
+
+uj jatekos
+
+felvetel gyujtemenybe;Lotto
+felvetel gyujtemenybe;Karo
+felvetel gyujtemenybe;Lotto
+felvetel gyujtemenybe;Netto
+
+uj pakli;Karo,Lotto
+
+export vilag;out.vilag03.txt
+export jatekos;out.jatekos03.txt
+
+harc;Teszt7 Kazamata;out.harc.02.txt
+
+export.vilag;out.vilag04.txt
+export jatekos;out.jatekos04.txt
+
+
+
