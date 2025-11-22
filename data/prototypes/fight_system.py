@@ -1,7 +1,7 @@
 from dataclasses import replace
 from math import floor
 from random import random
-from data.prototypes.search import findCardByName, findNotOwned
+from data.prototypes.search import findByName, findNotOwned
 from data.static.cards import CardObject, LeaderObject
 from data.static.definitions import DungeonReward
 from data.static.dungeon import Dungeon
@@ -38,7 +38,7 @@ class FightSystem:
                 # Health reward (+2HP)
                 case DungeonReward.HEALTH:
                     card_name = self.deck[self.card_index].name
-                    card = findCardByName(self.world.collection, card_name)
+                    card = findByName(self.world.collection, card_name)
                     if card is None:
                         raise Exception("Card not found")
                     card.health = min(card.health + 2, 100)
@@ -47,7 +47,7 @@ class FightSystem:
                 # Damage reward (+1DMG)
                 case DungeonReward.DAMAGE:
                     card_name = self.deck[self.card_index].name
-                    card = findCardByName(self.world.collection, card_name)
+                    card = findByName(self.world.collection, card_name)
                     if card is None:
                         raise Exception("Card not found")
                     card.damage = min(card.damage + 1, 100)

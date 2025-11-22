@@ -1,11 +1,9 @@
-from dataclasses import replace
 from math import ceil
 from data.prototypes.fight_system import FightSystem
-import data.prototypes.save_parser as save
-from data.prototypes.search import findCardByName
-from data.prototypes.world_parser import loadWorld
+import data.prototypes.parser.save as save
+from data.prototypes.search import findByName
+from data.prototypes.parser.world import loadWorld
 from data.static.cards import CardObject
-from data.static.world import World
 
 
 class Controller:
@@ -40,7 +38,7 @@ class Controller:
         for card_name in cards:
             if len(self.deck) >= DECK_MAX_LEN:
                 continue
-            card = findCardByName(self.world.collection, card_name)
+            card = findByName(self.world.collection, card_name)
             if card == None:
                 continue
             self.deck.append(card)

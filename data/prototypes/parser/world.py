@@ -2,13 +2,15 @@ from dataclasses import replace
 import json
 from pathlib import Path
 from data.prototypes.object_generator import *
-from data.prototypes.search import findCardByName, findLeaderByName
+from data.prototypes.search import findByName
 from data.static.definitions import *
 from data.static.cards import *
 from data.static.dungeon import Dungeon
 from data.static.world import World
 
-DATA_PATH: Path = Path(__file__).resolve().parent.parent
+DATA_PATH: Path = Path(__file__).resolve()
+while DATA_PATH.parts[-1] != "data":
+    DATA_PATH = DATA_PATH.parent
 
 def loadWorld(world_name: str = "") -> World:
     # look for the world data given name or fall back to default
@@ -53,7 +55,7 @@ def loadWorld(world_name: str = "") -> World:
             leader_data = parsed_data["leaders"][leader_name]
             leader_inherit = leader_data["inherit"]
             leader_buff = getattr(InheritedBuff, leader_data["buff"])
-            inherit_card = findCardByName(cards, leader_inherit)
+            inherit_card = findByName(cards, leader_inherit)
             if inherit_card == None:
                 raise Exception(f"Card not found {leader_inherit}")
             leader = createLeader(leader_name, inherit_card, leader_buff)
@@ -66,11 +68,11 @@ def loadWorld(world_name: str = "") -> World:
             dungeon_reward = getattr(DungeonReward, dungeon_data["reward"])
             dungeon_cards = []
             for card_name in dungeon_data["cards"]:
-                card = findCardByName(cards, card_name)
+                card = findByName(cards, card_name)
                 if card == None:
                     raise Exception(f"Card not found {card_name}")
                 dungeon_cards.append(card)
-            dungeon_leader = findLeaderByName(leaders, dungeon_data["leader"])
+            dungeon_leader = findByName(leaders, dungeon_data["leader"])
             dungeon = createDungeon(dungeon_name, dungeon_type,
                                     dungeon_reward, dungeon_cards,
                                     dungeon_leader)
@@ -78,7 +80,7 @@ def loadWorld(world_name: str = "") -> World:
 
         # Parse collection
         for card_name in parsed_data["collection"]:
-            card = findCardByName(cards, card_name)
+            card = findByName(cards, card_name)
             if card == None:
                 raise Exception(f"Card not found {card_name}")
             collection.append(replace(card))

@@ -2,11 +2,13 @@ import json
 import os
 from pathlib import Path
 from data.prototypes.object_generator import createCard
-from data.prototypes.world_parser import loadWorld
+from data.prototypes.parser.world import loadWorld
 from data.static.definitions import *
 from data.static.world import World
 
-DATA_PATH: Path = Path(__file__).resolve().parent.parent
+DATA_PATH: Path = Path(__file__).resolve()
+while DATA_PATH.parts[-1] != "data":
+    DATA_PATH = DATA_PATH.parent
 
 def save(world: World, save_name: str = "default_world") -> None:
     """
