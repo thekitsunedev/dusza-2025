@@ -1,3 +1,4 @@
+from dataclasses import replace
 from pathlib import Path
 from data.prototypes import controller
 from data.prototypes.controller import Controller
@@ -41,6 +42,7 @@ def start(path: str) -> None:
                             case "eletero":
                                 buff = InheritedBuff.HEALTH
                         leader = createLeader(name, inherit, buff)
+                        controller.world.leaders.append(leader)
                     case "uj kazamata":
                         """
                         $1          | $2    | $3    | $4    | $5
@@ -72,15 +74,19 @@ def start(path: str) -> None:
                             cards.append(findByName(controller.world.cards, card_name))
                         if dun_type is not DungeonType.SIMPLE:
                             leader = findByName(controller.world.leaders, command[4])
+                        else:
+                            leader = None
                         dungeon = createDungeon(name, dun_type, reward, cards, leader)
                         controller.world.dungeons.append(dungeon)
                     case "felvetel gyujtemenybe":
                         card = findByName(controller.world.cards, command[1])
-                        controller.world.collection.append(card)
+                        controller.world.collection.append(replace(card))
                     case "uj pakli":
                         controller.createDeck(command[1].split(","))
                     case "harc":
                         dun = findByName(controller.world.dungeons, command[1])
+                        if controller.canVisitBigDungeon == False and dun.dungeon_type is DungeonType.BIG:
+                            continue
                         controller.fight_system.prepare(controller.deck, dun)
                         with open(WORKDIR.joinpath(command[2]), "a") as file:
                             file.write(f"harc kezdodik;{command[1]}\n\n")
@@ -151,8 +157,7 @@ def start(path: str) -> None:
                                         element = "levego"
                                 file.write(f"gyujtemeny;{name};{damage};{health};{element}\n")
                         
-                            file.write("\n")
                             for card in controller.deck:
-                                file.write(f"pakli;{card.name}\n")
-            except:
-                ...
+                                file.write(f"\npakli;{card.name}")
+            except Exception as e:
+                print(e)
