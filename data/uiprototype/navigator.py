@@ -1,5 +1,5 @@
 from data.uiprototype.objects import *
-
+from data.uiprototype.cards import *
 
 class Scene:
     def __init__(self, name:str):
@@ -43,8 +43,7 @@ class MenuScene(Scene):
             events = pygame.event.get()
 
             # rajz
-            ctx.screen.fill(bg)
-            text = ctx.font.render("Start", True, (255,255,255))
+            text = ctx.font.render("Gyűjtemény", True, (255,255,255))
             rect = text.get_rect(topleft=(100,10))
             ctx.screen.blit(text, rect)
             pygame.draw.rect(ctx.screen,(255,0,0), rect, 2)
@@ -78,7 +77,6 @@ class CollectionScene(Scene):
         while nav.running:
             pygame.display.update()
             events = pygame.event.get()
-            ctx.screen.fill(bg)
             ctx.screen.blit(text,rect)
             pygame.draw.rect(ctx.screen,(255,0,0), rect, 2)
 
