@@ -17,6 +17,7 @@ import data.uiprototype.init as windowManager
 from data.prototypes.test_processor import start
 
 def main() -> None:
+    windowManager.init()
     if len(sys.argv) == 1:
         print("Használat: python main.py [--ui | <test_dir_path>]")
         sys.exit(1)

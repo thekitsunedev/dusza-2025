@@ -1,7 +1,6 @@
 from data.uiprototype.objects import *
 
 
-
 class Cards():
     def __init__(self, strength:int, health:int, name:str,elemental:str):
         self.strength = strength
@@ -15,6 +14,7 @@ class Cards():
         self.rect = self.imgfire.get_rect()
         self.height = 200
         self.width = 140
+        self.kartyafont = pygame.font.SysFont("arial", 22)
 
 
 class FireCard(Cards):
@@ -23,10 +23,9 @@ class FireCard(Cards):
 
     def location(self, screen, x, y):
         self.rect.topleft = (x,y)
-        dmg_text = Context().kartyafont.render(str(self.strength), True, (255,0,0))
-        hp_text = Context().kartyafont.render(str(self.health), True, (255,0,0))
-        name_text = Context().kartyafont.render(str(self.name), True, (255,0,0))
-        screen.fill((127,127,127))
+        dmg_text = self.kartyafont.render(str(self.strength), True, (255,0,0))
+        hp_text = self.kartyafont.render(str(self.health), True, (255,0,0))
+        name_text = self.kartyafont.render(str(self.name), True, (255,0,0))
         #Image
         screen.blit(self.imgfire, self.rect)
         #Name

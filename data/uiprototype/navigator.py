@@ -43,10 +43,47 @@ class MenuScene(Scene):
             events = pygame.event.get()
 
             # rajz
-            text = ctx.font.render("Gyűjtemény", True, (255,255,255))
-            rect = text.get_rect(topleft=(100,10))
-            ctx.screen.blit(text, rect)
-            pygame.draw.rect(ctx.screen,(255,0,0), rect, 2)
+            ctx.screen.fill(bg)
+
+            menu_items = ["Harc", "Gyűjtemény", "Kazamaták", "Beállítások", "Kilépés"]
+            buttons = []
+
+            y_start = 100
+            vertical_spacing = 150
+            mouse_pos = pygame.mouse.get_pos()
+
+            for i, text_str in enumerate(menu_items):
+
+                
+                text_color = (255, 255, 255)
+                bg_color = (50, 50, 50)       
+            
+                
+                text = ctx.font.render(text_str, True, text_color)
+                rect = text.get_rect()
+                rect.centerx = ctx.screen.get_width() // 2
+                rect.y = y_start + i * vertical_spacing
+
+                
+                box_rect = pygame.Rect(
+                    rect.x - 10, rect.y - 5,
+                    rect.width + 20, rect.height + 10
+                )
+
+                # Hover effekt
+                if box_rect.collidepoint(mouse_pos):
+                    text_color = (200, 200, 200)     
+                    bg_color = (100, 100, 100)       
+                    border_color = (200, 200, 200)   
+                    text = ctx.font.render(text_str, True, text_color)
+
+                # rajzolás
+                pygame.draw.rect(ctx.screen, bg_color, box_rect)         
+                pygame.draw.rect(ctx.screen, bg, box_rect, 2)  
+                ctx.screen.blit(text, rect)                              
+
+                buttons.append((box_rect, text_str))
+
 
             #event
             if events:
@@ -56,7 +93,6 @@ class MenuScene(Scene):
                         return
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if rect.collidepoint(event.pos):
-                            print("fasz")
                             nav.navigate("Collection")
                             return
                 
@@ -73,6 +109,10 @@ class CollectionScene(Scene):
         rect = text.get_rect(topleft=(300,10))
         bg = (127,127,127)
         ctx.screen.fill(bg)
+        FireCard(10,20,"HEHHE", "Tűz").location(ctx.screen,150,200)
+        FireCard(100,40,"Másik", "Tűz").location(ctx.screen,400,200)
+        FireCard(100,40,"Másik", "Tűz").location(ctx.screen,600,200)
+        FireCard(100,40,"Másik", "Tűz").location(ctx.screen,900,200)
         while nav.running:
             pygame.display.update()
             events = pygame.event.get()
@@ -83,6 +123,7 @@ class CollectionScene(Scene):
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
+        
             
 
 
