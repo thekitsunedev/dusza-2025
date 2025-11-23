@@ -65,8 +65,6 @@ class MenuScene(Scene):
             pygame.display.update()
 
             
-
-
 class CollectionScene(Scene):
     def __init__(self, name):
         super().__init__(name)
@@ -74,6 +72,7 @@ class CollectionScene(Scene):
         text = ctx.font.render("Monkey", True, (255,255,255))
         rect = text.get_rect(topleft=(300,10))
         bg = (127,127,127)
+        ctx.screen.fill(bg)
         while nav.running:
             pygame.display.update()
             events = pygame.event.get()
