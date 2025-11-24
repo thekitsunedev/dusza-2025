@@ -68,3 +68,18 @@ class WorldCalls:
                 continue
             if file_name.startswith(save_name):
                 file.unlink()
+    
+    @property
+    def difficulty(self) -> int:
+        """
+        Returns the current game difficulty
+        """
+        return self.controller.world.difficulty
+    
+    @difficulty.setter
+    def difficulty(self, new_difficulty: int):
+        """
+        Sets the new game difficulty
+        Accepted values: 0 - 10
+        """
+        self.controller.world.difficulty = min(max(new_difficulty, 0), 10)
