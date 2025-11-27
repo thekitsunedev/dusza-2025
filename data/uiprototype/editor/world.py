@@ -1,3 +1,4 @@
+from math import ceil
 from os import remove
 from json import load, dump
 from string import ascii_letters, digits
@@ -16,11 +17,6 @@ class WorldCreator:
         self.menu = pygame_menu.Menu("", width=1920//3*2, height=1080,
                                     position=(1920//3, 0, 0), theme=pygame_menu.themes.THEME_DARK)
         self.worlds = []
-        # world selector
-        # new? world name
-        # difficulty
-        # Save
-        # delte
         self.getWorlds()
         self.menu.add.dropselect(
             title="Világ",
@@ -48,6 +44,17 @@ class WorldCreator:
             onchange=self.setDifficulty,
             rangeslider_id="difficulty"
         )
+
+        ds = self.menu.add.dropselect_multiple(
+            title="Gyűjtemény",
+            dropselect_multiple_id="collection",
+            items=[("", "")],
+            default=[],
+            max_selected=0,
+            onchange=self.onCollectionChange
+        )
+        ds.reset_value()
+
         self.menu.add.button(
             title="Mentés",
             action=self.saveWorld
@@ -58,7 +65,10 @@ class WorldCreator:
         )
     
     def draw(self, ctx):
+        self.menu.get_widget("collection").readonly = len(self.world["cards"].keys()) == 0
+
         self.menu.draw(ctx.screen)
+            
     
     def eventHandler(self, event):
         self.menu.update(event)
@@ -86,6 +96,7 @@ class WorldCreator:
         if name == 0:
             wname.readonly = False
             wname.set_value("")
+            self.updateCollectionList()
             return
         self.world_name = value[0][0]
         with open(PATH.joinpath(name)) as file:
@@ -94,6 +105,7 @@ class WorldCreator:
         difficulty = self.menu.get_widget("difficulty").set_value(self.world["difficulty"])
         wname.set_value(value[0][0])
         wname.readonly = True
+        self.updateCollectionList()
     
     def onWorldNameChange(self, value):
         self.world_name = value
@@ -103,6 +115,7 @@ class WorldCreator:
             dump(self.world, file)
         self.getWorlds()
         self.menu.get_widget("selector").update_items(self.worlds)
+        self.menu.get_widget("selector").set_value(self.world_name)
     
     def deleteWorld(self): 
         self.world.clear()
@@ -117,6 +130,31 @@ class WorldCreator:
             ...
         self.getWorlds()
         self.menu.get_widget("selector").update_items(self.worlds)
+        self.menu.get_widget("selector").set_value("Új")
     
     def setDifficulty(self, value):
         self.world["difficulty"] = int(value)
+
+    
+    def updateCollectionList(self):
+        ds = self.menu.get_widget("collection")
+        options = []
+        default = []
+
+        cards = self.world["cards"]
+        if len(cards.keys()) == 0:
+            options = [("", 0)]
+        else:
+            for i, card in enumerate(cards):
+                options.append((card, i))
+                if card in self.world["collection"]:
+                    default.append(i)
+
+        ds._max_selected = ceil(len(options) / 2)
+        ds.update_items(options)
+        ds.set_default_value(default)
+        ds._make_selection_drop()
+        ds.reset_value()
+    
+    def onCollectionChange(self, value):
+        self.world["collection"] = [card[0] for card in value[0]]

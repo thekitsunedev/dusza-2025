@@ -5,7 +5,6 @@ from .world import WorldCreator
 from .card import CardCreator
 from .leader import LeaderCreator
 from .dungeon import DungeonCreator
-from .collection import CollectionCreator
 
 class Editor(Scene):
     def __init__(self, name):
@@ -19,26 +18,28 @@ class Editor(Scene):
         self.BUTTON_SELECTED = (75, 75, 75)
 
         self.world: dict = {}
+        self.world["difficulty"] = 0
+        self.world["cards"] = {}
+        self.world["leaders"] = {}
+        self.world["dungeons"] = {}
+        self.world["collection"] = []
         self.PAGE = {
             "world": WorldCreator(self.world),
             "cards": CardCreator(self.world),
             "leaders": LeaderCreator(self.world),
-            "dungeons": DungeonCreator(self.world),
-            "collection": CollectionCreator(self.world)
+            "dungeons": DungeonCreator(self.world)
         }
         self.LOCALE = {
             "world": "Világ",
             "cards": "Kártyák",
             "leaders": "Vezérek",
             "dungeons": "Kazamaták",
-            "collection": "Gyűjtemény",
             "back": "Vissza"
         }
 
     
     def run(self, ctx: Context, nav: Navigator) -> None:
         self.selected = "world"
-        self.world.clear()
         while nav.running:
             ctx.screen.fill(self.BG_COLOR)
             maus = pygame.mouse.get_pos()
