@@ -1,3 +1,5 @@
+import pygame
+
 class Cards():
     def __init__(self, strength:int, health:int, name:str,elemental:str):
         self.strength = strength

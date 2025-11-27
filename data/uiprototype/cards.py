@@ -1,7 +1,8 @@
+
 from data.uiprototype.objects import *
 
 
-FONT = pygame.font.SysFont("arial", 22)
+vlm = pygame.font.SysFont("Arial", 22)
 
 class CardSprite(pygame.sprite.Sprite):
     def __init__(self, img:str):
@@ -19,9 +20,9 @@ class Card():
     def __init__(self, name, hp, dmg, img):
         self.card:CardSprite = CardSprite(img)
         self.pos = (0,0)
-        self.name = FONT.render(str(name), True, (255,0,0))
-        self.hp = FONT.render(str(hp), True, (255,0,0))
-        self.dmg = FONT.render(str(dmg), True, (255,0,0))
+        self.name = vlm.render(str(name), True, (255,0,0))
+        self.hp = vlm.render(str(hp), True, (255,0,0))
+        self.dmg = vlm.render(str(dmg), True, (255,0,0))
 
 
         

@@ -1,5 +1,8 @@
 from data.uiprototype.objects import *
 from data.uiprototype.cards import *
+from Test.valami import *
+from data.prototypes.connector import Connector
+import pygame_menu
 
 class Scene:
     def __init__(self, name:str):
@@ -94,7 +97,7 @@ class MenuScene(Scene):
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if rect.collidepoint(event.pos):
                             ## DEBUG
-                            nav.navigate("WorldEditor")
+                            nav.navigate("Collection")
                             #nav.navigate("Collection")
                             return
                 
@@ -107,24 +110,78 @@ class CollectionScene(Scene):
     def __init__(self, name):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
-        text = ctx.font.render("Monkey", True, (255,255,255))
-        rect = text.get_rect(topleft=(300,10))
         bg = (127,127,127)
+        
+        lista2 = []
+        a = 0
+        n = 0
+        hp = 10
+        dmg = 10
+        x = 50
+
         ctx.screen.fill(bg)
+        for i in lista2:
+            if n < 9:
+                i = FireCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,0)
+                
+            elif n < 18:
+                if n == 9: x = 50
+                i = FireCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,280)
+            elif n < 27:
+                if n == 18: x = 50
+                i = FireCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,560)
+            else:
+                if n == 27: x = 50
+                i = FireCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,840)
+            x += 200
+            if a == len(lista2)-1:break
+            a += 1
+            n += 1
+
+        
         while nav.running:
-            pygame.display.update()
             events = pygame.event.get()
-            ctx.screen.blit(text,rect)
-            pygame.draw.rect(ctx.screen,(255,0,0), rect, 2)
 
             for event in events:
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
+            pygame.display.update()
         
             
 
 
+class StarterMenu(Scene):
+    def __init__(self, name):
+        super().__init__(name)
+    def run(self, ctx:Context, nav:Navigator):
+        bg = (127,127,127)
+
+        def on_button_click():
+            nav.navigate("MainMenu")
+        
+        menu = pygame_menu.Menu(
+            title="",
+            width=1920,
+            height=1080,
+            theme=pygame_menu.themes.THEME_DARK,
+
+        )
+
+        menu.add.button("Új játék", on_button_click)
+        
+        
+        while nav.running:
+            ctx.screen.fill(bg)
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    nav.navigate("QUIT")
+                    return
+            if menu.is_enabled():
+                menu.update(events)
+                menu.draw(ctx.screen)
+            pygame.display.update()
 
     
         

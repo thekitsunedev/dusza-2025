@@ -1,18 +1,20 @@
 import pygame
+pygame.init()
 from data.uiprototype import *
 from data.uiprototype.navigator import *
 from data.uiprototype.editor import Editor
 
 def init():
-    pygame.init()
+    
     ctx = Context()
     scenes = {
-        "MainMenu": MenuScene("scene1"),
-        "Collection": CollectionScene("scene2"),
+        "Starter":  StarterMenu("scene1"),
+        "MainMenu": MenuScene("scene2"),
+        "Collection": CollectionScene("scene3"),
         "WorldEditor": Editor("editor")
     }
     nav = Navigator(ctx, scenes)
-    nav.start("MainMenu")
+    nav.start("Starter")
 
 
 
