@@ -84,7 +84,7 @@ class CollectionScene(Scene):
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
         
-        lista2 = []
+        lista2 = ["Monkey","Holló","IDK","TAKONY"]
         a = 0
         n = 0
         hp = 10
