@@ -45,7 +45,7 @@ class MenuScene(Scene):
             # rajz
             ctx.screen.fill(bg)
 
-            menu_items = ["Harc", "Gyűjtemény", "Kazamaták", "Beállítások", "Kilépés"]
+            menu_items = ["Harc", "Gyűjtemény", "Kazamaták", "Beállítások", "Világ szerkesztő", "Kilépés"]
             buttons = []
 
             y_start = 100
@@ -93,7 +93,9 @@ class MenuScene(Scene):
                         return
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if rect.collidepoint(event.pos):
-                            nav.navigate("Collection")
+                            ## DEBUG
+                            nav.navigate("WorldEditor")
+                            #nav.navigate("Collection")
                             return
                 
 
