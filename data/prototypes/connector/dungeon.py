@@ -13,7 +13,7 @@ class DungeonCalls:
         
         for dungeon in self.controller.world.dungeons:
             available = True
-            if dungeon.type is DungeonType.BIG:
+            if dungeon.dungeon_type is DungeonType.BIG:
                 if not self.controller.canVisitBigDungeon:
                     available = False
             
