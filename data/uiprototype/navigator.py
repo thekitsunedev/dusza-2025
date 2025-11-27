@@ -129,8 +129,11 @@ class StarterMenu(Scene):
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
 
-        def on_button_click():
+        def menu():
             nav.navigate("MainMenu")
+
+        def editor():
+            nav.navigate("WorldEditor")
         
         menu = pygame_menu.Menu(
             title="",
@@ -140,8 +143,8 @@ class StarterMenu(Scene):
 
         )
 
-        menu.add.button("Új játék", on_button_click)
-        
+        menu.add.button("Új játék", menu)
+        menu.add.button("Editor", editor)
         
         while nav.running:
             ctx.screen.fill(bg)
