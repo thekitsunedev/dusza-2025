@@ -129,7 +129,7 @@ class StarterMenu(Scene):
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
 
-        def menu():
+        def mainmenu():
             nav.navigate("MainMenu")
 
         def editor():
@@ -143,7 +143,7 @@ class StarterMenu(Scene):
 
         )
 
-        menu.add.button("Új játék", menu)
+        menu.add.button("Új játék", mainmenu)
         menu.add.button("Editor", editor)
         
         while nav.running:
