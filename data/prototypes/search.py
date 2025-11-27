@@ -12,12 +12,12 @@ def findByName(cards: list[CardObject | LeaderObject | Dungeon], name: str) -> C
     - LeaderObject
     - Dungeon
     """
-    card = CardObject("", 0, 0, Element.FIRE)
+    ret_card = CardObject("", 0, 0, Element.FIRE)
     for card in cards:
         if card.name == name:
-            card = card
+            ret_card = card
             break
-    return card
+    return ret_card
     
 
 def findNotOwned(cards: list[CardObject], collection: list[CardObject]) -> CardObject:
