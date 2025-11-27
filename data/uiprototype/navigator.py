@@ -109,10 +109,6 @@ class CollectionScene(Scene):
         rect = text.get_rect(topleft=(300,10))
         bg = (127,127,127)
         ctx.screen.fill(bg)
-        FireCard(10,20,"HEHHE", "Tűz").location(ctx.screen,150,200)
-        FireCard(100,40,"Másik", "Tűz").location(ctx.screen,400,200)
-        FireCard(100,40,"Másik", "Tűz").location(ctx.screen,600,200)
-        FireCard(100,40,"Másik", "Tűz").location(ctx.screen,900,200)
         while nav.running:
             pygame.display.update()
             events = pygame.event.get()
