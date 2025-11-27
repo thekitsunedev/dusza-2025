@@ -46,8 +46,8 @@ def loadWorld(world_name: str = "") -> World:
             card_health = card_data["health"]
             card_damage = card_data["damage"]
             card_element = getattr(Element, card_data['element'])
-            card = createCard(card_name, card_health,
-                              card_damage, card_element)
+            card = createCard(card_name, card_damage,
+                              card_health, card_element)
             cards.append(card)
         
         # Parse leaders
