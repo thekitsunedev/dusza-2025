@@ -9,9 +9,9 @@ conn = Connector()
 worlds: list[str] = conn.fetchWorlds()
 
 # Loading
-conn.loadSave(save_name)
+conn.loadWorld(world_name)
 """
-save_name: str # Name of the save.
+world_name: str # Name of the world.
 If left empty it will load the default world.
 """
 
