@@ -6,18 +6,34 @@ class Cards():
         self.health = health
         self.elemental = elemental
         self.name = name
-        self.imgfire = pygame.image.load("data/uiprototype/img/4557.png").convert_alpha()
-        self.imgh = self.imgfire.get_height() // 2
-        self.imgw = self.imgfire.get_width() // 2
-        self.imgfire = pygame.transform.smoothscale(self.imgfire, (self.imgw, self.imgh))
-        self.rect = self.imgfire.get_rect()
         self.height = 200
         self.width = 140
         self.kartyafont = pygame.font.SysFont("arial", 22)
+    
+    
+    
+    def imgload(elemental:str):
+        if elemental == "Fire":
+            return pygame.image.load("data/uiprototype/img/fire.png").convert_alpha()
+        elif elemental == "Air":
+            return pygame.image.load("data/uiprototype/img/Air.png").convert_alpha()
+        elif elemental == "Earth":
+            return pygame.image.load("data/uiprototype/img/earth.jpg").convert_alpha()
+        else:
+            return pygame.image.load("data/uiprototype/img/water.png").convert_alpha()
+
+        
 
 
-class FireCard(Cards):
-    def __init__(self, strength, health, name, elemental):
+
+class CreateCard(Cards):
+    def __init__(self, strength, health, name, elemental:str):  
+        self.elemental = elemental
+        self.img = Cards.imgload(self.elemental)
+        self.imgh = self.img.get_height() // 2
+        self.imgw = self.img.get_width() // 2
+        self.img = pygame.transform.smoothscale(self.img, (self.imgw, self.imgh))
+        self.rect = self.img.get_rect()
         super().__init__(strength, health, name, elemental)
 
     def location(self, screen, x, y):
@@ -26,7 +42,7 @@ class FireCard(Cards):
         hp_text = self.kartyafont.render(str(self.health), True, (255,0,0))
         name_text = self.kartyafont.render(str(self.name), True, (255,0,0))
         #Image
-        screen.blit(self.imgfire, self.rect)
+        screen.blit(self.img, self.rect)
         #Name
         screen.blit(name_text, (self.rect.centerx - name_text.get_width() // 2, self.rect.top + 20))
         # Damage

@@ -94,17 +94,17 @@ class CollectionScene(Scene):
         ctx.screen.fill(bg)
         for i in lista2:
             if n < 9:
-                i = FireCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,0)
+                i = CreateCard(dmg,hp,lista2[a],"Fire").location(ctx.screen,x,0)
                 
             elif n < 18:
                 if n == 9: x = 50
-                i = FireCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,280)
+                i = CreateCard(dmg,hp,lista2[a],"Air").location(ctx.screen,x,280)
             elif n < 27:
                 if n == 18: x = 50
-                i = FireCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,560)
+                i = CreateCard(dmg,hp,lista2[a],"Earth").location(ctx.screen,x,560)
             else:
                 if n == 27: x = 50
-                i = FireCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,840)
+                i = CreateCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,840)
             x += 200
             if a == len(lista2)-1:break
             a += 1
@@ -121,8 +121,6 @@ class CollectionScene(Scene):
             pygame.display.update()
         
             
-
-
 class StarterMenu(Scene):
     def __init__(self, name):
         super().__init__(name)
@@ -157,6 +155,3 @@ class StarterMenu(Scene):
                 menu.update(events)
                 menu.draw(ctx.screen)
             pygame.display.update()
-
-    
-        
