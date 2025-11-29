@@ -44,22 +44,22 @@ class CardStats():
     
     def imgload(elemental:str):
         if elemental == "Tűz":
-            img = pygame.image.load("data/uiprototype/img/fire.png").convert_alpha()
+            img = pygame.image.load("data/ui/img/fire.png").convert_alpha()
             imgh = img.get_height() // 2
             imgw = img.get_width() // 2
             return pygame.transform.smoothscale(img,(imgw,imgh))
         elif elemental == "Levegő":
-            img = pygame.image.load("data/uiprototype/img/air.png").convert_alpha()
+            img = pygame.image.load("data/ui/img/air.png").convert_alpha()
             imgh = img.get_height() // 2
             imgw = img.get_width() // 2
             return pygame.transform.smoothscale(img,(imgw,imgh))
         elif elemental == "Föld":
-            img = pygame.image.load("data/uiprototype/img/earth.jpg").convert_alpha()
+            img = pygame.image.load("data/ui/img/earth.jpg").convert_alpha()
             imgh = img.get_height() // 2
             imgw = img.get_width() // 2
             return pygame.transform.smoothscale(img,(imgw,imgh))
         else:
-            img = pygame.image.load("data/uiprototype/img/water.png").convert_alpha()
+            img = pygame.image.load("data/ui/img/water.png").convert_alpha()
             imgh = img.get_height() // 2
             imgw = img.get_width() // 2
             return pygame.transform.smoothscale(img,(imgw,imgh))
