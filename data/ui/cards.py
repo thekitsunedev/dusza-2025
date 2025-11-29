@@ -1,5 +1,5 @@
 
-from data.uiprototype.objects import *
+from data.ui.objects import *
 
 
 vlm = pygame.font.SysFont("Arial", 22)

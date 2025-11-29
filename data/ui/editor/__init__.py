@@ -1,6 +1,6 @@
 import pygame
-from data.uiprototype.navigator import Scene, Navigator
-from data.uiprototype.objects import Context
+from data.ui.navigator import Scene, Navigator
+from data.ui.objects import Context
 from .world import WorldCreator
 from .card import CardCreator
 from .leader import LeaderCreator

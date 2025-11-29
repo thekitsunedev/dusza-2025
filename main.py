@@ -13,7 +13,7 @@
 ###############################################
 
 import sys
-import data.uiprototype.init as windowManager
+import data.ui.init as windowManager
 from data.prototypes.test_processor import start
 
 def main() -> None:

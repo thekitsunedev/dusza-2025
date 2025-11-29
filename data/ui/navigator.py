@@ -1,5 +1,5 @@
-from data.uiprototype.objects import *
-from data.uiprototype.cards import *
+from data.ui.objects import *
+from data.ui.cards import *
 from data.prototypes.connector import Connector
 import pygame_menu
 
