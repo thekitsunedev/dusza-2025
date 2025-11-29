@@ -11,9 +11,10 @@ import pygame_menu
 PATH = Path(__file__).resolve().parent.parent.parent.joinpath("custom_worlds")
 
 class WorldCreator:
-    def __init__(self, world):
+    def __init__(self, world, update):
         self.world = world
         self.world_name = ""
+        self.update = update
         self.menu = pygame_menu.Menu("", width=1920//3*2, height=1080,
                                     position=(1920//3, 0, 0), theme=pygame_menu.themes.THEME_DARK)
         self.worlds = []
@@ -31,7 +32,7 @@ class WorldCreator:
             textinput_id="world_name",
             maxchar=20,
             onchange=self.onWorldNameChange,
-            valid_chars=list(ascii_letters) + list(digits) + [" ", "_", "-"],
+            valid_chars=list(ascii_letters) + list(digits) + [" ", "_", "-", "'"],
 
         )
         
@@ -96,16 +97,15 @@ class WorldCreator:
         if name == 0:
             wname.readonly = False
             wname.set_value("")
-            self.updateCollectionList()
+            self.update(self.world)
             return
         self.world_name = value[0][0]
         with open(PATH.joinpath(name)) as file:
             self.world = load(file)
         
-        difficulty = self.menu.get_widget("difficulty").set_value(self.world["difficulty"])
         wname.set_value(value[0][0])
         wname.readonly = True
-        self.updateCollectionList()
+        self.update(self.world)
     
     def onWorldNameChange(self, value):
         self.world_name = value
@@ -131,12 +131,19 @@ class WorldCreator:
         self.getWorlds()
         self.menu.get_widget("selector").update_items(self.worlds)
         self.menu.get_widget("selector").set_value("Új")
+        self.menu.get_widget("world_name").set_value("")
+        self.update(self.world)
     
     def setDifficulty(self, value):
         self.world["difficulty"] = int(value)
 
-    
-    def updateCollectionList(self):
+
+    def updateContent(self, world):
+        self.world = world
+        # Update difficulty
+        self.menu.get_widget("difficulty").set_value(self.world["difficulty"])
+
+        # Update collection
         ds = self.menu.get_widget("collection")
         options = []
         default = []
