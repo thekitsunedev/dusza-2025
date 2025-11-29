@@ -43,17 +43,17 @@ class CardStats():
         self.kartyafont = pygame.font.SysFont("arial", 22)
     
     def imgload(elemental:str):
-        if elemental == "Fire":
+        if elemental == "Tűz":
             img = pygame.image.load("data/uiprototype/img/fire.png").convert_alpha()
             imgh = img.get_height() // 2
             imgw = img.get_width() // 2
             return pygame.transform.smoothscale(img,(imgw,imgh))
-        elif elemental == "Air":
+        elif elemental == "Levegő":
             img = pygame.image.load("data/uiprototype/img/air.png").convert_alpha()
             imgh = img.get_height() // 2
             imgw = img.get_width() // 2
             return pygame.transform.smoothscale(img,(imgw,imgh))
-        elif elemental == "Earth":
+        elif elemental == "Föld":
             img = pygame.image.load("data/uiprototype/img/earth.jpg").convert_alpha()
             imgh = img.get_height() // 2
             imgw = img.get_width() // 2
@@ -80,7 +80,7 @@ class CreateCard(CardStats):
         #Image
         screen.blit(self.img, self.rect)
         #Name
-        screen.blit(name_text, (self.rect.centerx - name_text.get_width() // 2, self.rect.top + 20))
+        screen.blit(name_text, (self.rect.centerx - name_text.get_width() // 2, self.rect.top + 40))
         # Damage
         if self.strength >= 100:
             screen.blit(dmg_text, (self.rect.left + 15, self.rect.bottom - dmg_text.get_height()- 15))

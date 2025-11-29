@@ -44,8 +44,13 @@ class MenuScene(Scene):
             print("Harc")
         def collection():
             nav.navigate("Collection")
+        def dungeon():
+            pass
         def quit():
             nav.navigate("QUIT")
+        def cards():
+            nav.navigate("AllCards")
+
         
         menu = pygame_menu.Menu(
             title="",
@@ -56,7 +61,9 @@ class MenuScene(Scene):
         )
 
         menu.add.button("Harc", fight)
+        menu.add.button("Kazamaták", dungeon)
         menu.add.button("Gyűjtemény", collection)
+        menu.add.button("Kártyák", cards)
         menu.add.button("Kilépés",quit)
         
         
@@ -82,34 +89,15 @@ class CollectionScene(Scene):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
-        
-        lista2 = ["Monkey","Holló","IDK","TAKONY"]
-        a = 0
-        n = 0
-        hp = 10
-        dmg = 10
-        x = 50
-
+        cards:dict = ctx.conn.fetchCards("collection")
+        x = 10
+        y = 10
         ctx.screen.fill(bg)
-        for i in lista2:
-            if n < 9:
-                i = CreateCard(dmg,hp,lista2[a],"Fire").location(ctx.screen,x,0)
-                
-            elif n < 18:
-                if n == 9: x = 50
-                i = CreateCard(dmg,hp,lista2[a],"Air").location(ctx.screen,x,280)
-            elif n < 27:
-                if n == 18: x = 50
-                i = CreateCard(dmg,hp,lista2[a],"Earth").location(ctx.screen,x,560)
-            else:
-                if n == 27: x = 50
-                i = CreateCard(dmg,hp,lista2[a],"Tűz").location(ctx.screen,x,840)
-            x += 200
-            if a == len(lista2)-1:break
-            a += 1
-            n += 1
-
-        
+        for i in cards:
+            a = cards[i]
+            CreateCard(a["damage"], a["health"],i,a["element"]).location(ctx.screen, x, y)
+            x += 190
+       
         while nav.running:
             events = pygame.event.get()
 
@@ -126,6 +114,9 @@ class StarterMenu(Scene):
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
 
+        def worldselection():
+            nav.navigate("WorldSelect")
+
         def mainmenu():
             nav.navigate("MainMenu")
 
@@ -140,7 +131,7 @@ class StarterMenu(Scene):
 
         )
 
-        menu.add.button("Új játék", mainmenu)
+        menu.add.button("Új játék", worldselection)
         menu.add.button("Editor", editor)
         
         while nav.running:
@@ -153,4 +144,69 @@ class StarterMenu(Scene):
             if menu.is_enabled():
                 menu.update(events)
                 menu.draw(ctx.screen)
+            pygame.display.update()
+
+
+class WorldSelect(Scene):
+    def __init__(self, name):
+        super().__init__(name)
+    def run(self, ctx:Context, nav:Navigator):
+        bg = (127,127,127)
+        
+        worlds:list[str] = ctx.conn.fetchWorlds() 
+
+        def back():
+            nav.navigate("QUIT")
+
+        def button(world):
+            ctx.conn.loadWorld(world)
+            nav.navigate("MainMenu")
+
+        menu = pygame_menu.Menu(
+        title="Világ választás",
+        width=1920,
+        height=1080,
+        theme=pygame_menu.themes.THEME_DARK,
+
+        )
+
+        for i in worlds:
+            menu.add.button(i, lambda:button(i))
+
+        menu.add.button("Kilépés", back)
+        
+        while nav.running:
+            ctx.screen.fill(bg)
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    nav.navigate("QUIT")
+                    return
+            if menu.is_enabled():
+                menu.update(events)
+                menu.draw(ctx.screen)
+            pygame.display.update()
+
+
+class AllCards(Scene):
+    def __init__(self, name):
+        super().__init__(name)
+    def run(self, ctx:Context, nav:Navigator):
+        bg = (127,127,127)
+        cards:dict = ctx.conn.fetchCards("cards")
+        x = 10
+        y = 10
+        ctx.screen.fill(bg)
+        for i in cards:
+            a = cards[i]
+            CreateCard(a["damage"], a["health"],i,a["element"]).location(ctx.screen, x, y)
+            x += 190
+       
+        while nav.running:
+            events = pygame.event.get()
+
+            for event in events:
+                if event.type == pygame.QUIT:
+                    nav.navigate("QUIT")
+                    return
             pygame.display.update()
