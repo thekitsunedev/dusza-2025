@@ -10,8 +10,6 @@ class Cards():
         self.width = 140
         self.kartyafont = pygame.font.SysFont("arial", 22)
     
-    
-    
     def imgload(elemental:str):
         if elemental == "Fire":
             return pygame.image.load("data/uiprototype/img/fire.png").convert_alpha()
@@ -21,9 +19,6 @@ class Cards():
             return pygame.image.load("data/uiprototype/img/earth.jpg").convert_alpha()
         else:
             return pygame.image.load("data/uiprototype/img/water.png").convert_alpha()
-
-        
-
 
 
 class CreateCard(Cards):

@@ -1,6 +1,5 @@
 from data.uiprototype.objects import *
 from data.uiprototype.cards import *
-from Test.valami import *
 from data.prototypes.connector import Connector
 import pygame_menu
 
