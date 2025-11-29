@@ -116,11 +116,11 @@ class StarterMenu(Scene):
         def worldselection():
             nav.navigate("WorldSelect")
 
-        def mainmenu():
-            nav.navigate("MainMenu")
-
         def editor():
             nav.navigate("WorldEditor")
+        
+        def quit():
+            nav.navigate("QUIT")
         
         menu = pygame_menu.Menu(
             title="",
@@ -132,6 +132,7 @@ class StarterMenu(Scene):
 
         menu.add.button("Új játék", worldselection)
         menu.add.button("Editor", editor)
+        menu.add.button("Kilépés", quit)
         
         while nav.running:
             ctx.screen.fill(bg)
