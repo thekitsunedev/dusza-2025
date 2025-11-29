@@ -24,10 +24,10 @@ class Editor(Scene):
         self.world["dungeons"] = {}
         self.world["collection"] = []
         self.PAGE = {
-            "world": WorldCreator(self.world),
-            "cards": CardCreator(self.world),
-            "leaders": LeaderCreator(self.world),
-            "dungeons": DungeonCreator(self.world)
+            "world": WorldCreator(self.world, self.update),
+            "cards": CardCreator(self.world, self.update),
+            "leaders": LeaderCreator(self.world, self.update),
+            "dungeons": DungeonCreator(self.world, self.update)
         }
         self.LOCALE = {
             "world": "Világ",
@@ -98,3 +98,8 @@ class Editor(Scene):
             for page in self.PAGE.keys():
                 if self.selected == page:
                     self.PAGE[page].eventHandler(events)
+    
+    def update(self, world):
+        self.world = world
+        for page in self.PAGE:
+            self.PAGE[page].updateContent(self.world)
