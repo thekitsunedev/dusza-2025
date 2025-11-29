@@ -29,7 +29,6 @@ class Navigator():
         self.running = False 
 
 
-
 class MenuScene(Scene):
     def __init__(self, name):
         super().__init__(name)
@@ -64,7 +63,7 @@ class MenuScene(Scene):
         menu.add.button("Kazamaták", dungeon)
         menu.add.button("Gyűjtemény", collection)
         menu.add.button("Kártyák", cards)
-        menu.add.button("Kilépés",quit)
+        menu.add.button("Kilépés", quit)
         
         
         while nav.running:
@@ -156,7 +155,7 @@ class WorldSelect(Scene):
         worlds:list[str] = ctx.conn.fetchWorlds() 
 
         def back():
-            nav.navigate("QUIT")
+            nav.navigate("Starter")
 
         def button(world):
             ctx.conn.loadWorld(world)
