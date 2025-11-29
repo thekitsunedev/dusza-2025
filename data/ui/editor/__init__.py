@@ -89,7 +89,7 @@ class Editor(Scene):
                         box = buttons.get(button)
                         if box.collidepoint(event.pos):
                             if button == "back":
-                                nav.navigate("MainMenu")
+                                nav.navigate("Starter")
                                 return
                             else:
                                 self.selected = button
