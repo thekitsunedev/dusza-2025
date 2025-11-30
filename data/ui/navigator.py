@@ -131,7 +131,7 @@ class StarterMenu(Scene):
         )
 
         menu.add.button("Új játék", worldselection)
-        menu.add.button("Editor", editor)
+        menu.add.button("Világ szerkesztő", editor)
         menu.add.button("Kilépés", quit)
         
         while nav.running:
