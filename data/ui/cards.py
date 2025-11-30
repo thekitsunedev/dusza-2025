@@ -66,14 +66,17 @@ class CardStats():
 
 
 class CreateCard(CardStats):
-    def __init__(self, strength, health, name, elemental:str):  
+    def __init__(self, strength, health, name, elemental:str, x, y):  
         self.elemental = elemental
         self.img = CardStats.imgload(self.elemental)
         self.rect = self.img.get_rect()
+        self.selected = False
+        self.x = x
+        self.y = y
         super().__init__(strength, health, name, elemental)
 
-    def location(self, screen, x, y):
-        self.rect.topleft = (x,y)
+    def location(self, screen):
+        self.rect.topleft = (self.x,self.y)
         dmg_text = self.kartyafont.render(str(self.strength), True, (255,0,0))
         hp_text = self.kartyafont.render(str(self.health), True, (255,0,0))
         name_text = self.kartyafont.render(str(self.name), True, (255,0,0))
@@ -95,6 +98,15 @@ class CreateCard(CardStats):
              screen.blit(hp_text, (self.rect.right - 44, self.rect.bottom - hp_text.get_height()- 14))
         else:
             screen.blit(hp_text, (self.rect.right - 37, self.rect.bottom - hp_text.get_height()- 14))
+        if self.selected:
+            pygame.draw.line(screen, "green", self.rect.bottomleft, self.rect.bottomright, 4)
+        
+    def click(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if self.rect.collidepoint(event.pos):
+                self.selected ^= 1
+                return True
+        return False
 
 
 class Button:

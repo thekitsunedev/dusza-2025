@@ -40,7 +40,7 @@ class MenuScene(Scene):
         ctx.screen.fill(bg)
         msg = ""
         def fight():
-            nav.navigate("DungeonSelection")
+            nav.navigate("CardSelection")
         def collection():
             nav.navigate("Collection")
         def dungeon():
@@ -112,7 +112,7 @@ class CollectionScene(Scene):
                     return
             pygame.display.update()
         
-            
+
 class StarterMenu(Scene):
     def __init__(self, name):
         super().__init__(name)
@@ -304,13 +304,31 @@ class CardSelection(Scene):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
-        
- 
+        ctx.screen.fill(bg)
+        cards:dict = ctx.conn.fetchCards("collection")
+        x = 50
+        y = 50
+        onscreen = []
+        for i in cards:
+            a = cards[i]
+            card = CreateCard(a["damage"], a["health"],i,a["element"],x,y)
+            card.location(ctx.screen)
+            onscreen.append(card)
+            x += 190
+
         while nav.running:
             events = pygame.event.get()
+            ctx.screen.fill(bg)
+            for card in onscreen:
+                card.location(ctx.screen)
 
             for event in events:
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
+                for i in onscreen:
+                    if i.click(event):
+                        print(f"{i.name}")
+
+
             pygame.display.update()

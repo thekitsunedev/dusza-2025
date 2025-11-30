@@ -18,7 +18,8 @@ def init():
         "AllCards" : AllCards("allcards"),
         "Dungeons" : Dungeons("dungeons"),
         "DungeonSelection": DungeonSelection("dungeonselection"),
-        "Fight" : Fight("fight")
+        "Fight" : Fight("fight"),
+        "CardSelection": CardSelection("cardselection")
     }
     nav = Navigator(ctx, scenes)
     nav.start("Starter")
