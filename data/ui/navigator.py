@@ -94,7 +94,11 @@ class CollectionScene(Scene):
         ctx.screen.fill(bg)
         for i in cards:
             a = cards[i]
+<<<<<<< HEAD
             CreateCard(a["damage"], a["health"],i,a["element"], x, y).location(ctx.screen)
+=======
+            CreateCard(a["damage"], a["health"],i,a["element"], x, y).location(ctx.scree)
+>>>>>>> f3d1207a6185b1ae6bed134a0139284151112289
             x += 190
         
         while nav.running:
@@ -160,6 +164,9 @@ class StarterMenu(Scene):
 class WorldSelect(Scene):
     def __init__(self, name):
         super().__init__(name)
+        self.selected_world = ""
+
+
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
         
@@ -168,22 +175,27 @@ class WorldSelect(Scene):
         def back():
             nav.navigate("Starter")
 
-        def button(world):
-            print(world)
-            ctx.conn.loadWorld(world)
+        def loadWorld():
+            ctx.conn.loadWorld(self.selected_world)
             nav.navigate("MainMenu")
+
 
         menu = pygame_menu.Menu(
         title="Világ választás",
         width=1920,
         height=1080,
-        theme=pygame_menu.themes.THEME_DARK,
-
+        theme=pygame_menu.themes.THEME_DARK
         )
 
-        for i in worlds:
-            menu.add.button(i, lambda:button(i))
+        menu.add.dropselect(
+            title="Világ",
+            items=[(world, i) for i, world in enumerate(worlds)],
+            default=0,
+            onchange=self.selectWorld,
+            placeholder="Válassz világot"
+        )
 
+        menu.add.button("Betöltés", loadWorld)
         menu.add.button("Kilépés", back)
         
         while nav.running:
@@ -197,6 +209,9 @@ class WorldSelect(Scene):
                 menu.update(events)
                 menu.draw(ctx.screen)
             pygame.display.update()
+    
+    def selectWorld(self, value, index):
+        self.selected_world = value[0][0]
 
 
 class AllCards(Scene):
@@ -313,9 +328,9 @@ class CardSelection(Scene):
         bg = (127,127,127)
         ctx.screen.fill(bg)
         cards:dict = ctx.conn.fetchCards("collection")
-        print(len(cards.keys()))
         x = 50
         y = 50
+        y_count = 0
         deck = []
         onscreen = []
         for i in cards:
@@ -324,6 +339,10 @@ class CardSelection(Scene):
             card.location(ctx.screen)
             onscreen.append(card)
             x += 190
+            y_count = (y_count + 1) % 10
+            if y_count == 9:
+                y += 280
+                x = 50
 
         while nav.running:
             events = pygame.event.get()
@@ -341,11 +360,13 @@ class CardSelection(Scene):
                         nav.navigate("Fight")
                 for i in onscreen:
                     if i.click(event):
+                        if len(deck) >= ctx.conn.deck_limit:
+                            i.selected = False
                         if i.selected:
                             deck.append(i.name)
                         else:
-                            deck.remove(i.name)
-                        print(deck)
+                            if i.name in deck:
+                                deck.remove(i.name)
 
 
 
