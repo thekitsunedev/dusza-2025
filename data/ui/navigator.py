@@ -2,6 +2,7 @@ from data.ui.objects import *
 from data.ui.cards import *
 from data.prototypes.connector import Connector
 import pygame_menu
+import pygame
 
 class Scene:
     def __init__(self, name:str):
@@ -330,7 +331,7 @@ class Fight(Scene):
         ctx.screen.fill(bg)
         status = ctx.conn.prepareFight(ctx.dungeon_name)
         print(status)
-       
+        clock = pygame.time.Clock()
 
 
         def draw(status):
@@ -348,26 +349,39 @@ class Fight(Scene):
                 x += 200
             if len(status["active_card"]) != 0:
                 card = status["active_card"]
-                CreateCard(card["damage"],card["health"],card["name"],card["element"], 200,200).location(ctx.screen)
+                CreateCard(card["damage"],card["health"],card["name"],card["element"], 200,450).location(ctx.screen)
             if len(status["active_enemy"]) != 0:
                 card = status["active_enemy"]
-                CreateCard(card["damage"],card["health"],card["name"],card["element"], 200,200).location(ctx.screen)
+                CreateCard(card["damage"],card["health"],card["name"],card["element"], 450,450).location(ctx.screen)
         draw(status)
         
             
 
 
+        iters = []
+        for st in ctx.conn.iterateFight():
+            iters.append(st)
 
-
-
+        timer = 0
         while nav.running:
+
+            ctx.screen.fill("#7f7f7f")        
             events = pygame.event.get()
+            draw(status)
+            timer = (timer + 1) % 30
+            if timer == 89:
+                status = iters.pop(0)
+                if len(iters) == 0:
+                    print(status)
+                    nav.navigate("MainMenu")
+
 
             for event in events:
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
             pygame.display.update()
+            clock.tick(60)
 
 
 class CardSelection(Scene):
