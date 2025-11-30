@@ -268,34 +268,17 @@ class DungeonSelection(Scene):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
-
-        def action(name):
-            ctx.conn.prepareFight(name)
-
-
-
-        menu = pygame_menu.Menu(
-            title="",
-            width=1920,
-            height=1080,
-            theme=pygame_menu.themes.THEME_DARK,
-
-        )
-
-        dungeons: dict = ctx.conn.fetchDungeons()
-
-        for i in dungeons:
-            menu.add.button(i, lambda:action(i))
-
-
-
+        ctx.screen.fill(bg)
         while nav.running:
             events = pygame.event.get()
-
+            Button((255,0,0),200,900,200,50,"Harc").draw(ctx.screen)
             for event in events:
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if  Button((255,0,0),200,900,200,50,"Harc").isOver(pygame.mouse.get_pos()):
+                        nav.navigate("Fight")
             pygame.display.update()
     
 
@@ -313,8 +296,6 @@ class Fight(Scene):
                     nav.navigate("QUIT")
                     return
             pygame.display.update()
-
-
 
 
 class CardSelection(Scene):
@@ -353,7 +334,7 @@ class CardSelection(Scene):
                     return
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if  Button((255,0,0),200,900,200,50,"Vissza").isOver(pygame.mouse.get_pos()):
-                        nav.navigate("Fight")
+                        nav.navigate("DungeonSelection")
                 for i in onscreen:
                     if i.click(event):
                         if len(deck) >= ctx.conn.deck_limit:
