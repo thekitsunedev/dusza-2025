@@ -330,12 +330,32 @@ class Fight(Scene):
         ctx.screen.fill(bg)
         status = ctx.conn.prepareFight(ctx.dungeon_name)
         print(status)
-        x = 200
-        y = 200
+       
 
-        for i in status["deck"]:
-            card = status["deck"][i]
-            CreateCard(card["damage"], card["health"],i,card["element"],x,y).location(ctx.screen)
+
+        def draw(status):
+            x = 150
+            y = 740
+            for i in status["deck"]:
+                card = status["deck"][i]
+                CreateCard(card["damage"], card["health"],i,card["element"],x,y).location(ctx.screen)
+                x += 200
+            y = 100
+            x = 150
+            for i in status["enemy_deck"]:
+                card = status["enemy_deck"][i]
+                CreateCard(card["damage"], card["health"],i,card["element"],x,y).location(ctx.screen)
+                x += 200
+            if len(status["active_card"]) != 0:
+                card = status["active_card"]
+                CreateCard(card["damage"],card["health"],card["name"],card["element"], 200,200).location(ctx.screen)
+            if len(status["active_enemy"]) != 0:
+                card = status["active_enemy"]
+                CreateCard(card["damage"],card["health"],card["name"],card["element"], 200,200).location(ctx.screen)
+        draw(status)
+        
+            
+
 
 
 
