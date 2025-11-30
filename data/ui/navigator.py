@@ -375,6 +375,7 @@ class CardSelection(Scene):
                     return
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if  Button((255,0,0),200,900,200,50,"Vissza").isOver(pygame.mouse.get_pos()):
+                        ctx.conn.createDeck(deck)
                         nav.navigate("DungeonSelection")
                 for i in onscreen:
                     if i.click(event):
