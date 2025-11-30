@@ -298,7 +298,7 @@ class DungeonSelection(Scene):
         items = []
         for dungeon in dungeons:
             dun = dungeons[dungeon]
-            text = f"{dungeon} {dun["type"]} {dun["reward"]}"
+            text = f"{dungeon} {dun['type']} {dun['reward']}"
             items.append((text, dungeon)),
 
         men.add.dropselect(
@@ -386,6 +386,7 @@ class CardSelection(Scene):
                     return
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if  Button((255,0,0),200,900,200,50,"Vissza").isOver(pygame.mouse.get_pos()):
+                        ctx.conn.createDeck(deck)
                         nav.navigate("DungeonSelection")
                 for i in onscreen:
                     if i.click(event):
