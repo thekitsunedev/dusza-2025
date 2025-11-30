@@ -3,6 +3,7 @@ pygame.init()
 from data.ui import *
 from data.ui.navigator import *
 from data.ui.editor import Editor
+from data.ui.save import SaveSelect
 from data.prototypes.connector import Connector
 
 
@@ -18,7 +19,8 @@ def init():
         "AllCards" : AllCards("allcards"),
         "Dungeons" : Dungeons("dungeons"),
         "DungeonSelection": DungeonSelection("dungeonselection"),
-        "Fight" : Fight("fight")
+        "Fight" : Fight("fight"),
+        "SaveSelect": SaveSelect("saveselect")
     }
     nav = Navigator(ctx, scenes)
     nav.start("Starter")
