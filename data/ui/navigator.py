@@ -369,7 +369,7 @@ class Fight(Scene):
             events = pygame.event.get()
             draw(status)
             timer = (timer + 1) % 30
-            if timer == 89:
+            if timer == 29:
                 status = iters.pop(0)
                 if len(iters) == 0:
                     print(status)
