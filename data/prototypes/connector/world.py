@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 from data.prototypes.controller import Controller
 import data.prototypes.parser.save as save
 
@@ -67,7 +68,7 @@ class WorldCalls:
             if not file_name.endswith(".json"):
                 continue
             if file_name.startswith(save_name):
-                file.unlink()
+                os.remove(file)
     
     @property
     def difficulty(self) -> int:

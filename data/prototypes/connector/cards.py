@@ -1,3 +1,5 @@
+from math import ceil
+
 class CardCalls:
 
     def __init__(self):
@@ -92,3 +94,7 @@ class CardCalls:
             }
         
         return result
+    
+    @property
+    def deck_limit(self) -> int:
+        return ceil(len(self.controller.world.collection)/2)
