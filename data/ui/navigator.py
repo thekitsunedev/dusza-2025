@@ -168,7 +168,8 @@ class WorldSelect(Scene):
         def back():
             nav.navigate("Starter")
 
-        def button(world):
+        def button(self, world):
+            print(world)
             ctx.conn.loadWorld(world)
             nav.navigate("MainMenu")
 
@@ -181,7 +182,7 @@ class WorldSelect(Scene):
         )
 
         for i in worlds:
-            menu.add.button(i, lambda:button(i))
+            menu.add.button(i, lambda:button(str(i)))
 
         menu.add.button("Kilépés", back)
         
@@ -310,8 +311,10 @@ class CardSelection(Scene):
         bg = (127,127,127)
         ctx.screen.fill(bg)
         cards:dict = ctx.conn.fetchCards("collection")
+        print(len(cards.keys()))
         x = 50
         y = 50
+        deck = []
         onscreen = []
         for i in cards:
             a = cards[i]
@@ -332,7 +335,12 @@ class CardSelection(Scene):
                     return
                 for i in onscreen:
                     if i.click(event):
-                        print(f"{i.name}")
+                        if i.selected:
+                            deck.append(i.name)
+                        else:
+                            deck.remove(i.name)
+                        print(deck)
+
 
 
             pygame.display.update()
