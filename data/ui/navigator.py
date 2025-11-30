@@ -299,7 +299,7 @@ class DungeonSelection(Scene):
         items = []
         for dungeon in dungeons:
             dun = dungeons[dungeon]
-            text = f"{dungeon} {dun["type"]} {dun["reward"]}"
+            text = f"{dungeon} {dun['type']} {dun['reward']}"
             items.append((text, dungeon)),
 
         men.add.dropselect(
