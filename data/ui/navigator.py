@@ -279,7 +279,6 @@ class DungeonSelection(Scene):
         self.dungeon = ""
     
     def run(self, ctx:Context, nav:Navigator):
-        print("FASZ")
         bg = (127,127,127)
 
         def startFight(value, index):
@@ -329,6 +328,18 @@ class Fight(Scene):
     def run(self, ctx:Context, nav:Navigator):
         bg = ctx.bg
         ctx.screen.fill(bg)
+        status = ctx.conn.prepareFight(ctx.dungeon_name)
+        print(status)
+        x = 200
+        y = 200
+
+        for i in status["deck"]:
+            card = status["deck"][i]
+            CreateCard(card["damage"], card["health"],i,card["element"],x,y).location(ctx.screen)
+
+
+
+
         while nav.running:
             events = pygame.event.get()
 
