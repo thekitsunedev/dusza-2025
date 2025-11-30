@@ -36,7 +36,7 @@ class MenuScene(Scene):
     def run(self, ctx:Context, nav:Navigator):
         text = ctx.font.render("Gyűjtemény", True, (255,255,255))
         rect = text.get_rect(topleft=(100,10))
-        bg = (127,127,127)
+        bg = ctx.bg
         ctx.screen.fill(bg)
         msg = ""
         def fight():
@@ -87,7 +87,7 @@ class CollectionScene(Scene):
     def __init__(self, name):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
-        bg = (127,127,127)
+        bg = ctx.bg
         cards:dict = ctx.conn.fetchCards("collection")
         x = 10
         y = 10
@@ -117,7 +117,7 @@ class StarterMenu(Scene):
     def __init__(self, name):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
-        bg = (127,127,127)
+        bg = ctx.bg
 
         def worldselection():
             nav.navigate("WorldSelect")
@@ -164,7 +164,7 @@ class WorldSelect(Scene):
 
 
     def run(self, ctx:Context, nav:Navigator):
-        bg = (127,127,127)
+        bg = ctx.bg
         
         worlds:list[str] = ctx.conn.fetchWorlds() 
 
@@ -214,15 +214,22 @@ class AllCards(Scene):
     def __init__(self, name):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
-        bg = (127,127,127)
+        bg = ctx.bg
         cards:dict = ctx.conn.fetchCards("cards")
         x = 10
         y = 10
+        o = 0
         ctx.screen.fill(bg)
         Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
         for i in cards:
             a = cards[i]
-            CreateCard(a["damage"], a["health"],i,a["element"], x, y).location(ctx.screen)
+            if o < 9:
+                CreateCard(a["damage"], a["health"],i,a["element"], x, y).location(ctx.screen)
+                if o == 9:
+                    y = 50
+                    x = 50
+            else:
+                CreateCard(a["damage"], a["health"],i,a["element"], x, y+100).location(ctx.screen)
             x += 190
     
         while nav.running:
@@ -242,12 +249,15 @@ class Dungeons(Scene):
     def __init__(self, name):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
-        bg = (127,127,127)
+        bg = ctx.bg
         dungeons: dict = ctx.conn.fetchDungeons()
-        x = 10
-        y = 10
+        x = 400
+        y = 300
         ctx.screen.fill(bg)
-        CreateKazamata("Majom","HHE","ada").draw(ctx.screen,200,200) # Kazamaták
+        for i in dungeons:
+            a = dungeons[i]
+            CreateKazamata(i,a["reward"],a["type"]).draw(ctx.screen,x,y)
+            x += 370
         
         Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
         while nav.running:
@@ -267,7 +277,7 @@ class DungeonSelection(Scene):
     def __init__(self, name):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
-        bg = (127,127,127)
+        bg = ctx.bg
         ctx.screen.fill(bg)
         while nav.running:
             events = pygame.event.get()
@@ -286,7 +296,7 @@ class Fight(Scene):
     def __init__(self, name):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
-        bg = (127,127,127)
+        bg = ctx.bg
         ctx.screen.fill(bg)
         while nav.running:
             events = pygame.event.get()
@@ -302,7 +312,7 @@ class CardSelection(Scene):
     def __init__(self, name):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
-        bg = (127,127,127)
+        bg = ctx.bg
         ctx.screen.fill(bg)
         cards:dict = ctx.conn.fetchCards("collection")
         x = 50
