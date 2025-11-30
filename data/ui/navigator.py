@@ -266,19 +266,50 @@ class Dungeons(Scene):
 class DungeonSelection(Scene):
     def __init__(self, name):
         super().__init__(name)
+        self.dungeon = ""
+    
     def run(self, ctx:Context, nav:Navigator):
+        print("FASZ")
         bg = (127,127,127)
-        ctx.screen.fill(bg)
+
+        def startFight(value, index):
+            ctx.dungeon_name = value[0][1]
+            print(ctx.dungeon_name)
+            nav.navigate("Fight")
+
+        men = pygame_menu.Menu(
+            title="Világ választás",
+            width=1920,
+            height=1080,
+            theme=pygame_menu.themes.THEME_DARK
+        )
+
+
+        dungeons = ctx.conn.fetchDungeons()
+        items = []
+        for dungeon in dungeons:
+            dun = dungeons[dungeon]
+            text = f"{dungeon} {dun["type"]} {dun["reward"]}"
+            items.append((text, dungeon)),
+
+        men.add.dropselect(
+            title="Kazamata",
+            items=items,
+            onchange=startFight,
+            selection_box_width=700
+        )
+        men.add.button("asd", lambda: print("asd"))
+
+        nav.running = True
         while nav.running:
+            ctx.screen.fill(bg)
             events = pygame.event.get()
-            Button((255,0,0),200,900,200,50,"Harc").draw(ctx.screen)
             for event in events:
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if  Button((255,0,0),200,900,200,50,"Harc").isOver(pygame.mouse.get_pos()):
-                        nav.navigate("Fight")
+            men.update(events)
+            men.draw(ctx.screen)
             pygame.display.update()
     
 
