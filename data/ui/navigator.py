@@ -94,7 +94,7 @@ class CollectionScene(Scene):
         ctx.screen.fill(bg)
         for i in cards:
             a = cards[i]
-            CreateCard(a["damage"], a["health"],i,a["element"]).location(ctx.screen, x, y)
+            CreateCard(a["damage"], a["health"],i,a["element"], x, y).location(ctx.screen)
             x += 190
         
         while nav.running:
@@ -168,7 +168,7 @@ class WorldSelect(Scene):
         def back():
             nav.navigate("Starter")
 
-        def button(self, world):
+        def button(world):
             print(world)
             ctx.conn.loadWorld(world)
             nav.navigate("MainMenu")
@@ -182,7 +182,7 @@ class WorldSelect(Scene):
         )
 
         for i in worlds:
-            menu.add.button(i, lambda:button(str(i)))
+            menu.add.button(i, lambda:button(i))
 
         menu.add.button("Kilépés", back)
         
@@ -211,7 +211,7 @@ class AllCards(Scene):
         Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
         for i in cards:
             a = cards[i]
-            CreateCard(a["damage"], a["health"],i,a["element"]).location(ctx.screen, x, y)
+            CreateCard(a["damage"], a["health"],i,a["element"], x, y).location(ctx.screen)
             x += 190
     
         while nav.running:
@@ -232,10 +232,12 @@ class Dungeons(Scene):
         super().__init__(name)
     def run(self, ctx:Context, nav:Navigator):
         bg = (127,127,127)
-        cards:dict = ctx.conn.fetchCards("cards")
+        dungeons: dict = ctx.conn.fetchDungeons()
         x = 10
         y = 10
         ctx.screen.fill(bg)
+        CreateKazamata("Majom","HHE","ada").draw(ctx.screen,200,200) # Kazamaták
+        
         Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
         while nav.running:
             events = pygame.event.get()
@@ -326,6 +328,7 @@ class CardSelection(Scene):
         while nav.running:
             events = pygame.event.get()
             ctx.screen.fill(bg)
+            Button((255,0,0),200,900,200,50,"Harc").draw(ctx.screen)
             for card in onscreen:
                 card.location(ctx.screen)
 
@@ -333,6 +336,9 @@ class CardSelection(Scene):
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if  Button((255,0,0),200,900,200,50,"Vissza").isOver(pygame.mouse.get_pos()):
+                        nav.navigate("Fight")
                 for i in onscreen:
                     if i.click(event):
                         if i.selected:

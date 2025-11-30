@@ -137,3 +137,23 @@ class Button:
                 return True
             
         return False
+
+
+class CreateKazamata():
+    def __init__(self, name, reward, type):
+        self.name = name
+        self.reward = reward
+        self.type = type
+        self.font =  pygame.font.SysFont("arial", 22)
+        self.img = pygame.image.load("data/ui/img/Kazamata.png").convert_alpha()
+        self.rect = self.img.get_rect()
+
+    def draw(self,screen, x,y):
+        name_text = self.font.render(str(self.name), True, (255,0,0))
+        name_reward = self.font.render(str(self.reward), True,(255,0,0))
+        name_type = self.font.render(str(self.type), True,(255,0,0))
+        self.rect.topleft = (x,y)
+        screen.blit(self.img, self.rect)
+        screen.blit(name_text, (self.rect.centerx - name_text.get_width() // 2, self.rect.top + 40))
+        screen.blit(name_reward, (self.rect.centerx - name_text.get_width() // 2, self.rect.top + 100))
+        screen.blit(name_type, (self.rect.centerx - name_text.get_width() // 2, self.rect.top + 200))
