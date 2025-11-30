@@ -40,11 +40,11 @@ class MenuScene(Scene):
         ctx.screen.fill(bg)
         msg = ""
         def fight():
-            print("Harc")
+            nav.navigate("DungeonSelection")
         def collection():
             nav.navigate("Collection")
         def dungeon():
-            pass
+            nav.navigate("Dungeons")
         def quit():
             nav.navigate("QUIT")
         def cards():
@@ -96,11 +96,17 @@ class CollectionScene(Scene):
             a = cards[i]
             CreateCard(a["damage"], a["health"],i,a["element"]).location(ctx.screen, x, y)
             x += 190
-       
+        
         while nav.running:
             events = pygame.event.get()
+            
+            vissza = Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
 
             for event in events:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if  Button((255,0,0),200,900,200,50,"Vissza").isOver(pygame.mouse.get_pos()):
+                        nav.navigate("MainMenu")
+
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
@@ -197,11 +203,109 @@ class AllCards(Scene):
         x = 10
         y = 10
         ctx.screen.fill(bg)
+        Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
         for i in cards:
             a = cards[i]
             CreateCard(a["damage"], a["health"],i,a["element"]).location(ctx.screen, x, y)
             x += 190
-       
+    
+        while nav.running:
+            events = pygame.event.get()
+
+            for event in events:
+                if event.type == pygame.QUIT:
+                    nav.navigate("QUIT")
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if  Button((255,0,0),200,900,200,50,"Vissza").isOver(pygame.mouse.get_pos()):
+                        nav.navigate("MainMenu")
+                    return
+            pygame.display.update()
+
+
+class Dungeons(Scene):
+    def __init__(self, name):
+        super().__init__(name)
+    def run(self, ctx:Context, nav:Navigator):
+        bg = (127,127,127)
+        cards:dict = ctx.conn.fetchCards("cards")
+        x = 10
+        y = 10
+        ctx.screen.fill(bg)
+        Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
+        while nav.running:
+            events = pygame.event.get()
+
+            for event in events:
+                if event.type == pygame.QUIT:
+                    nav.navigate("QUIT")
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if  Button((255,0,0),200,900,200,50,"Vissza").isOver(pygame.mouse.get_pos()):
+                        nav.navigate("MainMenu")
+                    return
+            pygame.display.update()
+
+
+class DungeonSelection(Scene):
+    def __init__(self, name):
+        super().__init__(name)
+    def run(self, ctx:Context, nav:Navigator):
+        bg = (127,127,127)
+
+        def action(name):
+            ctx.conn.prepareFight(name)
+
+
+
+        menu = pygame_menu.Menu(
+            title="",
+            width=1920,
+            height=1080,
+            theme=pygame_menu.themes.THEME_DARK,
+
+        )
+
+        dungeons: dict = ctx.conn.fetchDungeons()
+
+        for i in dungeons:
+            menu.add.button(i, lambda:action(i))
+
+
+
+        while nav.running:
+            events = pygame.event.get()
+
+            for event in events:
+                if event.type == pygame.QUIT:
+                    nav.navigate("QUIT")
+                    return
+            pygame.display.update()
+    
+
+class Fight(Scene):
+    def __init__(self, name):
+        super().__init__(name)
+    def run(self, ctx:Context, nav:Navigator):
+        bg = (127,127,127)
+        ctx.screen.fill(bg)
+        while nav.running:
+            events = pygame.event.get()
+
+            for event in events:
+                if event.type == pygame.QUIT:
+                    nav.navigate("QUIT")
+                    return
+            pygame.display.update()
+
+
+
+
+class CardSelection(Scene):
+    def __init__(self, name):
+        super().__init__(name)
+    def run(self, ctx:Context, nav:Navigator):
+        bg = (127,127,127)
+        
+ 
         while nav.running:
             events = pygame.event.get()
 

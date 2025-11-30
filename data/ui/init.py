@@ -15,7 +15,10 @@ def init():
         "Collection": CollectionScene("scene3"),
         "WorldEditor": Editor("editor"),
         "WorldSelect": WorldSelect("worldselect"),
-        "AllCards" : AllCards("allcards")
+        "AllCards" : AllCards("allcards"),
+        "Dungeons" : Dungeons("dungeons"),
+        "DungeonSelection": DungeonSelection("dungeonselection"),
+        "Fight" : Fight("fight")
     }
     nav = Navigator(ctx, scenes)
     nav.start("Starter")

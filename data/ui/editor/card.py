@@ -1,4 +1,5 @@
 from string import ascii_letters, digits
+from pygame.locals import *
 import pygame
 import pygame_menu
 
