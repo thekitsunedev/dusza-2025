@@ -94,7 +94,7 @@ class CollectionScene(Scene):
         ctx.screen.fill(bg)
         for i in cards:
             a = cards[i]
-            CreateCard(a["damage"], a["health"],i,a["element"], x, y).location(ctx.scree)
+            CreateCard(a["damage"], a["health"],i,a["element"], x, y).location(ctx.screen)
             x += 190
         
         while nav.running:
