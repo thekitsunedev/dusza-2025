@@ -3,6 +3,7 @@ from data.ui.cards import *
 from data.prototypes.connector import Connector
 import pygame_menu
 import pygame
+import sys
 
 class Scene:
     def __init__(self, name:str):
@@ -21,7 +22,9 @@ class Navigator():
     def start(self, name:str):
         self.state = name
         while True:
-            if self.state == "QUIT": return
+            if self.state == "QUIT": 
+                sys.exit(0)
+                return
             self.running = True
             self.scenes[self.state].run(self.ctx, self)
 
@@ -284,7 +287,6 @@ class DungeonSelection(Scene):
 
         def startFight(value, index):
             ctx.dungeon_name = value[0][1]
-            print(ctx.dungeon_name)
             nav.navigate("Fight")
 
         men = pygame_menu.Menu(
@@ -308,7 +310,6 @@ class DungeonSelection(Scene):
             onchange=startFight,
             selection_box_width=700
         )
-        men.add.button("asd", lambda: print("asd"))
 
         nav.running = True
         while nav.running:
@@ -330,30 +331,109 @@ class Fight(Scene):
         bg = ctx.bg
         ctx.screen.fill(bg)
         status = ctx.conn.prepareFight(ctx.dungeon_name)
-        print(status)
         clock = pygame.time.Clock()
-
+        timeout = 61
 
         def draw(status):
-            x = 150
-            y = 740
-            for i in status["deck"]:
-                card = status["deck"][i]
-                CreateCard(card["damage"], card["health"],i,card["element"],x,y).location(ctx.screen)
+            active_card_name = status["active_card"].get("name", "")
+            active_enemy_name = status["active_enemy"].get("name", "")     
+
+            # Draw player's cards
+            x = 100
+            y = 700
+            for card_name in status["deck"]:
+                card = status["deck"][card_name]
+                offset = 0
+                if card_name == active_card_name:
+                    offset = -160
+                elif card["health"] == 0:
+                    offset = 100
+                CreateCard(card["damage"], card["health"],card_name,card["element"],x,y + offset).location(ctx.screen)
                 x += 200
-            y = 100
-            x = 150
-            for i in status["enemy_deck"]:
-                card = status["enemy_deck"][i]
-                CreateCard(card["damage"], card["health"],i,card["element"],x,y).location(ctx.screen)
+
+
+            # Draw enemy's cards
+            y = 70
+            x = 100
+            for card_name in status["enemy_deck"]:
+                card = status["enemy_deck"][card_name]
+                offset = 0
+                if card_name == active_enemy_name:
+                    offset = 160
+                elif card["health"] == 0:
+                    offset = -100
+                CreateCard(card["damage"], card["health"],card_name,card["element"],x,y+offset).location(ctx.screen)
                 x += 200
-            if len(status["active_card"]) != 0:
-                card = status["active_card"]
-                CreateCard(card["damage"],card["health"],card["name"],card["element"], 200,450).location(ctx.screen)
-            if len(status["active_enemy"]) != 0:
-                card = status["active_enemy"]
-                CreateCard(card["damage"],card["health"],card["name"],card["element"], 450,450).location(ctx.screen)
+
+            # Draw text
+            enemy_title = ctx.font2.render("Ellenfél kártyái",
+                    True, "black")
+            enemy_box = enemy_title.get_rect()
+            enemy_box.x = 10
+            enemy_box.y = 10
+            enemy_rect = pygame.draw.rect(ctx.screen, ctx.bg, 
+                (enemy_box.x, enemy_box.y, enemy_box.width, enemy_box.height))
+            ctx.screen.blit(enemy_title, enemy_rect)
+
+            player_title = ctx.font2.render("Játékos kártyái",
+                    True, "black")
+            player_box = player_title.get_rect()
+            player_box.x = 10
+            player_box.y = 1030
+            player_rect = pygame.draw.rect(ctx.screen, ctx.bg, 
+                (player_box.x, player_box.y, player_box.width, player_box.height))
+            ctx.screen.blit(player_title, player_rect)
+
+
         draw(status)
+
+        def draw_result(status):
+            ctx.screen.fill("#2f2f2f")
+            result = status["result"]
+            match(result["status"]):
+                case "jatekos vesztett":
+                    text = ctx.font.render("Játékos Vesztett", True, "white")
+                    text_box = text.get_rect()
+                    text_box.x = 1920//2 - text_box.width // 2
+                    text_box.y = 1080//2 - text_box.height // 2
+                    rect = pygame.draw.rect(ctx.screen, "#2f2f2f",
+                        (text_box.x, text_box.y, text_box.width, text_box.height))
+                    ctx.screen.blit(text, rect)
+                case "jatekos nyert":
+                    text = ctx.font.render("Játékos Nyert", True, "white")
+                    text_box = text.get_rect()
+                    text_box.x = 1920//2 - text_box.width // 2
+                    text_box.y = 1080//2 - text_box.height // 2
+                    rect = pygame.draw.rect(ctx.screen, "#2f2f2f",
+                        (text_box.x, text_box.y, text_box.width, text_box.height))
+                    ctx.screen.blit(text, rect)
+
+                    reward = result["reward"].get("stat", "kartya")
+                    if reward == "kartya":
+                        text = ctx.font2.render(f"Nyeremény: Kártya {result["reward"]["name"]}", True, "white")
+                        text_box = text.get_rect()
+                        text_box.x = 1920//2 - text_box.width // 2
+                        text_box.y = 1080//2 - text_box.height // 2 + 100
+                        rect = pygame.draw.rect(ctx.screen, "#2f2f2f",
+                            (text_box.x, text_box.y, text_box.width, text_box.height))
+                        ctx.screen.blit(text, rect)
+                    elif reward == "eletero":
+                        text = ctx.font2.render(f"Nyeremény: +2 Életerő {result["reward"]["card"]}", True, "white")
+                        text_box = text.get_rect()
+                        text_box.x = 1920//2 - text_box.width // 2
+                        text_box.y = 1080//2 - text_box.height // 2 + 100
+                        rect = pygame.draw.rect(ctx.screen, "#2f2f2f",
+                            (text_box.x, text_box.y, text_box.width, text_box.height))
+                        ctx.screen.blit(text, rect)
+                    elif reward == "sebzes":
+                        text = ctx.font2.render(f"Nyeremény: +1 Sebzés {result["reward"]["card"]}", True, "white")
+                        text_box = text.get_rect()
+                        text_box.x = 1920//2 - text_box.width // 2
+                        text_box.y = 1080//2 - text_box.height // 2 + 100
+                        rect = pygame.draw.rect(ctx.screen, "#2f2f2f",
+                            (text_box.x, text_box.y, text_box.width, text_box.height))
+                        ctx.screen.blit(text, rect)
+            
         
             
 
@@ -367,12 +447,18 @@ class Fight(Scene):
 
             ctx.screen.fill("#7f7f7f")        
             events = pygame.event.get()
-            draw(status)
-            timer = (timer + 1) % 30
-            if timer == 29:
-                status = iters.pop(0)
-                if len(iters) == 0:
-                    print(status)
+            if "result" not in status.keys():
+                draw(status)
+            else:
+                draw_result(status)
+            timer = (timer + 1) % timeout
+            if timer == timeout - 1:
+                if len(iters) > 0:
+                    status = iters.pop(0)
+                elif timeout != 601:
+                    timeout = 601
+                    timer = 0
+                else:
                     nav.navigate("MainMenu")
 
 
@@ -380,6 +466,8 @@ class Fight(Scene):
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
+                if timeout == 601 and event.type == pygame.MOUSEBUTTONDOWN:
+                    nav.navigate("MainMenu")
             pygame.display.update()
             clock.tick(60)
 
