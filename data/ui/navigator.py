@@ -157,7 +157,7 @@ class StarterMenu(Scene):
         )
 
         menu.add.button("Új játék", worldselection)
-        menu.add.button("Betőltés", saveselection)
+        menu.add.button("Betöltés", saveselection)
         menu.add.button("Világ szerkesztő", editor)
         menu.add.button("Kilépés", quit)
         
