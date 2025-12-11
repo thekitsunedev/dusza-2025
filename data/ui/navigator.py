@@ -4,6 +4,7 @@ from data.prototypes.connector import Connector
 import pygame_menu
 import pygame
 import sys
+from string import digits, ascii_letters
 
 class Scene:
     def __init__(self, name:str):
@@ -50,10 +51,13 @@ class MenuScene(Scene):
         def dungeon():
             nav.navigate("Dungeons")
         def quit():
+            if ctx.save_name != "":
+                ctx.conn.createSave(ctx.save_name)
             nav.navigate("QUIT")
         def cards():
             nav.navigate("AllCards")
-
+        def diffChange(value):
+            ctx.conn.controller.world.difficulty = int(value)
         
         menu = pygame_menu.Menu(
             title="",
@@ -62,13 +66,22 @@ class MenuScene(Scene):
             theme=pygame_menu.themes.THEME_DARK,
 
         )
-
         menu.add.button("Harc", fight)
         menu.add.button("Kazamaták", dungeon)
         menu.add.button("Gyűjtemény", collection)
         menu.add.button("Kártyák", cards)
+        menu.add.range_slider(
+            title="Nehézség",
+            default=ctx.conn.controller.world.difficulty,
+            onchange=diffChange,
+            increment=1.0,
+            range_values=(0.0, 10.0),
+            value_format=lambda x: f"{x:.0f}"            
+        )
         menu.add.button("Kilépés", quit)
         
+        if ctx.save_name != "":
+            ctx.conn.createSave(ctx.save_name)
         
         while nav.running:
             ctx.screen.fill(bg)
@@ -169,6 +182,7 @@ class WorldSelect(Scene):
 
     def run(self, ctx:Context, nav:Navigator):
         bg = ctx.bg
+        ctx.save_name = ""
         
         worlds:list[str] = ctx.conn.fetchWorlds() 
 
@@ -178,10 +192,13 @@ class WorldSelect(Scene):
         def loadWorld():
             ctx.conn.loadWorld(self.selected_world)
             nav.navigate("MainMenu")
+        
+        def onSaveChange(value):
+            ctx.save_name = value
 
 
         menu = pygame_menu.Menu(
-        title="Világ választás",
+        title="Új játék",
         width=1920,
         height=1080,
         theme=pygame_menu.themes.THEME_DARK
@@ -194,7 +211,13 @@ class WorldSelect(Scene):
             onchange=self.selectWorld,
             placeholder="Válassz világot"
         )
-
+        menu.add.text_input(
+            title="Mentés név: ",
+            default="",
+            maxchar=20,
+            onchange=onSaveChange,
+            valid_chars=list(ascii_letters) + list(digits) + [" ", "_", "-", "'"]
+        )
         menu.add.button("Betöltés", loadWorld)
         menu.add.button("Kilépés", back)
         
@@ -460,14 +483,18 @@ class Fight(Scene):
                     timer = 0
                 else:
                     nav.navigate("MainMenu")
+                    return
 
 
             for event in events:
                 if event.type == pygame.QUIT:
                     nav.navigate("QUIT")
                     return
-                if timeout == 601 and event.type == pygame.MOUSEBUTTONDOWN:
-                    nav.navigate("MainMenu")
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if timeout == 601:
+                        nav.navigate("MainMenu")
+                        return
+                    timer = timeout - 2
             pygame.display.update()
             clock.tick(60)
 

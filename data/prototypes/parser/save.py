@@ -29,6 +29,9 @@ def save(world: World, save_name: str = "default_world") -> None:
         card_data["damage"] = card.damage
         card_data["element"] = card.element.name
         save_data["collection"][card.name] = card_data
+    
+    # Export difficulty
+    save_data["difficulty"] = world.difficulty
 
     # Save output
     with open(SAVE_PATH, "w") as file:
@@ -65,6 +68,9 @@ def load(save_name: str) -> World:
             card = createCard(card_name, card_damage,
                               card_health, card_element)
             world.collection.append(card)
+
+        # Load difficulty
+        world.difficulty = save_data["difficulty"]
 
     return world
 

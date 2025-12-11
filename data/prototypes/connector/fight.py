@@ -52,9 +52,9 @@ class FightCalls:
                     "status": iter_result[0]
                 }
                 if len(iter_result) == 2:
-                    reward_card = findByName(self.controller.collection, iter_result[1])
+                    reward_card = findByName(self.controller.world.collection, iter_result[1])
                     result["result"]["reward"] = {
-                        "name": result[1],
+                        "name": reward_card.name,
                         "health": reward_card.health,
                         "damage": reward_card.damage,
                         "element": self.MAPPING["ELEMENT"][reward_card.element.name]

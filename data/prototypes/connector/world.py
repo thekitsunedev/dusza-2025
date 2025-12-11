@@ -44,7 +44,7 @@ class WorldCalls:
         """
         Initializes the save, use fetch* to get info about the world
         """
-        self.controller = Controller(save_name)
+        self.controller = Controller(save_name, load=True)
 
     def loadWorld(self, world_name: str) -> None:
         """

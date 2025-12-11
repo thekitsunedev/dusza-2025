@@ -31,7 +31,7 @@ class SaveSelect(Scene):
 
         else:
             saves = [(save, i) for i, save in enumerate(saves)]
-            menu.add.dropselect(
+            self.ds = menu.add.dropselect(
                 title="Mentés",
                 items=saves,
                 onchange=self.selectSave,
@@ -72,6 +72,7 @@ class SaveSelect(Scene):
     def loadSave(self):
         if self.save_name == "":
             return
+        self.ctx.save_name = self.save_name
         self.ctx.conn.loadSave(self.save_name)
         self.nav.navigate("MainMenu")
         
@@ -79,6 +80,10 @@ class SaveSelect(Scene):
         if self.save_name == "":
             return
         self.ctx.conn.deleteSave(self.save_name)
+        saves = self.ctx.conn.fetchSaves()
+        self.ds.update_items([(save, i) for i, save in enumerate(saves)])
+        if len(saves) == 0:
+            self.nav.navigate("WorldSelect")
         
     def selectSave(self, value, index):
         self.save_name = value[0][0]
