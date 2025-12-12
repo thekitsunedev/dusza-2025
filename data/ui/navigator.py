@@ -60,7 +60,7 @@ class MenuScene(Scene):
             ctx.conn.controller.world.difficulty = int(value)
         
         menu = pygame_menu.Menu(
-            title="",
+            title="Főmenü",
             width=1920,
             height=1080,
             theme=pygame_menu.themes.THEME_DARK,
@@ -245,6 +245,7 @@ class AllCards(Scene):
         cards:dict = ctx.conn.fetchCards("cards")
         x = 10
         y = 10
+        y_count = 0
         o = 0
         ctx.screen.fill(bg)
         Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
@@ -258,6 +259,10 @@ class AllCards(Scene):
             else:
                 CreateCard(a["damage"], a["health"],i,a["element"], x, y+100).location(ctx.screen)
             x += 190
+            y_count = (y_count + 1) % 10
+            if y_count == 9:
+                y += 280
+                x = 10
     
         while nav.running:
             events = pygame.event.get()
@@ -278,13 +283,18 @@ class Dungeons(Scene):
     def run(self, ctx:Context, nav:Navigator):
         bg = ctx.bg
         dungeons: dict = ctx.conn.fetchDungeons()
-        x = 400
-        y = 300
+        x = 10
+        y = 10
+        y_count = 0
         ctx.screen.fill(bg)
         for i in dungeons:
             a = dungeons[i]
             CreateKazamata(i,a["reward"],a["type"]).draw(ctx.screen,x,y)
-            x += 370
+            x += 230
+            y_count = (y_count + 1) % 9
+            if y_count == 8:
+                y += 340
+                x = 10
         
         Button((255,0,0),200,900,200,50,"Vissza").draw(ctx.screen)
         while nav.running:
